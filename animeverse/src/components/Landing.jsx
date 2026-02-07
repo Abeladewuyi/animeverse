@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import animeBg from "../assets/anime-bg.png";
 
 function Landing() {
 
@@ -7,32 +8,68 @@ function Landing() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center text-white"
+      className="relative min-h-screen flex items-center justify-center px-6 text-white bg-cover bg-center"
       style={{
-        background:
-          "linear-gradient(-45deg, #020617, #0f172a, #312e81, #581c87)",
-        backgroundSize: "400% 400%",
-        animation: "gradientMove 12s ease infinite",
+        backgroundImage: `url(${animeBg})`,
       }}
     >
 
-      <img src={logo} className="h-24 mb-6" />
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/70"></div>
 
-      <h1 className="text-5xl font-bold mb-4">
-        Welcome to AnimeVerse
-      </h1>
 
-      <p className="text-gray-300 mb-8 text-center max-w-md">
-        Enter a universe where anime lovers connect, share, and explore.
-      </p>
+      {/* CONTENT */}
+      <div className="relative z-10 flex flex-col items-center text-center max-w-2xl">
 
-      <button
-        onClick={() => navigate("/login")}
-        className="px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 font-semibold hover:scale-110 transition"
-      >
-        Enter Universe 🚀
-      </button>
+        {/* LOGO */}
+        <img 
+          src={logo} 
+          alt="AnimeVerse"
+          className="h-20 md:h-28 mb-6"
+        />
 
+
+        {/* HEADLINE */}
+        <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+          Welcome to <span className="text-indigo-400">AnimeVerse</span>
+        </h1>
+
+
+        {/* SUBTEXT */}
+        <p className="text-gray-300 mb-10 text-sm md:text-lg">
+          Enter a universe where anime lovers connect, share,
+          and explore endless adventures together.
+        </p>
+
+
+        {/* BUTTONS */}
+        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+
+          {/* LOGIN */}
+          <button
+            onClick={() => navigate("/login")}
+            className="px-8 py-4 rounded-xl bg-gradient-to-r 
+                       from-indigo-500 to-purple-600 font-semibold
+                       hover:scale-105 transition duration-300
+                       shadow-lg w-full md:w-auto"
+          >
+            Enter Universe 🚀
+          </button>
+
+
+          {/* SIGNUP */}
+          <button
+            onClick={() => navigate("/signup")}
+            className="px-8 py-4 rounded-xl border border-white/30
+                       hover:bg-white/10 transition
+                       backdrop-blur-md w-full md:w-auto"
+          >
+            Create Account
+          </button>
+
+        </div>
+
+      </div>
     </div>
   );
 }
