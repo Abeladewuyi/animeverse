@@ -3,8 +3,10 @@ import animeBg from "../assets/anime-bg.png";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 function Signup() {
 
