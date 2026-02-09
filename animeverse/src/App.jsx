@@ -1,11 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
-import Home from "./components/Home";
 import Signup from "./components/Signup";
+import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ProtectedRoute from "./ProtectedRoute";
-
 
 function App() {
   return (
