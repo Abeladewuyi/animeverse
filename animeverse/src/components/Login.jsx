@@ -1,126 +1,112 @@
 import logo from "../assets/logo.png";
 import animeBg from "../assets/anime-bg.png";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithPopup } from "firebase/auth";
-import { googleProvider } from "../firebase";
+
 import { IoArrowBack } from "react-icons/io5";
 
-function Signup() {
-
+function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignup = async () => {
-
-    if(password !== confirmPassword){
-      alert("Passwords do not match!");
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please fill in all fields");
       return;
     }
 
-    try{
-
-      await createUserWithEmailAndPassword(auth, email, password);
-
-      alert("Welcome to AnimeVerse 🚀");
-
-      // 🔥 Auto login effect
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Welcome back to AnimeVerse 🚀");
       navigate("/home");
-
-    }catch(error){
+    } catch (error) {
       alert(error.message);
     }
   };
 
-
   return (
-
     <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{
-        backgroundImage: `url(${animeBg})`
-      }}
+      className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
+      style={{ backgroundImage: `url(${animeBg})` }}
     >
-
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* Glass Card */}
-      <div className="relative z-10 bg-white/5 backdrop-blur-2xl border border-white/10 p-10 rounded-3xl w-[420px] shadow-[0_0_60px_rgba(99,102,241,0.35)]">
+      {/* Card */}
+      <div className="relative z-10 bg-white/5 backdrop-blur-2xl border border-white/10 p-10 rounded-3xl w-[400px] shadow-[0_0_60px_rgba(99,102,241,0.35)]">
 
-        {/* LOGO */}
-        <img
-          src={logo}
-          alt="AnimeVerse"
-          className="h-16 mx-auto mb-4"
+        {/* Back Arrow */}
+        <IoArrowBack
+          onClick={() => navigate("/signup")}
+          className="text-white text-2xl cursor-pointer mb-4 hover:scale-110 transition"
         />
 
-        {/* HEADER */}
-        <h1 className="text-2xl md:text-3xl font-bold text-white text-center">
-          Create Your Universe
+        {/* Logo */}
+        <img src={logo} alt="AnimeVerse" className="h-16 mx-auto mb-4" />
+
+        <h1 className="text-3xl font-bold text-white text-center mb-2">
+          Welcome Back
         </h1>
 
         <p className="text-gray-400 text-center mb-8">
-          Join AnimeVerse and begin your journey.
+          Log in and continue your anime journey.
         </p>
 
-
-        {/* EMAIL */}
+        {/* Email */}
         <input
           type="email"
           placeholder="Email"
-          className="w-[90%] max-w-md mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition shadow-[0_0_10px_rgba(139,92,246,0.4)]"
-          onChange={(e)=>setEmail(e.target.value)}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
+        {/* Password */}
+        <div className="relative mb-6">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        {/* PASSWORD */}
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-[90%] max-w-md mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-[0_0_10px_rgba(99,102,241,0.4)]"
-          onChange={(e)=>setPassword(e.target.value)}
-        />
+          <span
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-3 cursor-pointer text-gray-300"
+          >
+            👁
+          </span>
+        </div>
 
-
-        {/* CONFIRM PASSWORD */}
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="w-[90%] max-w-md mb-6 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition shadow-[0_0_10px_rgba(139,92,246,0.4)]"
-          onChange={(e)=>setConfirmPassword(e.target.value)}
-        />
-
-
-        {/* SIGNUP BUTTON */}
+        {/* Login Button */}
         <button
-          onClick={handleSignup}
-          className="w-[90%] max-w-md py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hover:scale-105 hover:shadow-[0_0_25px_rgba(139,92,246,0.8)] transition duration-300"
+          onClick={handleLogin}
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hover:scale-105 transition"
         >
-          Enter AnimeVerse 🚀
+          Enter Universe 🚀
         </button>
 
-
-        {/* LOGIN LINK */}
+        {/* Signup Link */}
         <p className="text-gray-400 text-center mt-6">
-          Already have an account?{" "}
+          Don’t have an account?{" "}
           <span
-            onClick={()=>navigate("/login")}
+            onClick={() => navigate("/signup")}
             className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent cursor-pointer font-semibold"
           >
-            Login
+            Sign up
           </span>
         </p>
-
       </div>
-
     </div>
   );
 }
 
-export default Signup;
+export default Login;
