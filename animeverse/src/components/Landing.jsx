@@ -47,7 +47,7 @@ function Landing() {
 
           {/* LOGIN */}
           <button
-            onClick={() => navigate("/login")}
+         onClick={() => navigate("/login", { replace: true })}
             className="px-8 py-4 rounded-xl bg-gradient-to-r 
                        from-indigo-500 to-purple-600 font-semibold
                        hover:scale-105 transition duration-300
@@ -59,7 +59,7 @@ function Landing() {
 
           {/* SIGNUP */}
           <button
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/signup", { replace: true })}
             className="px-8 py-4 rounded-xl border border-white/30
                        hover:bg-white/10 transition
                        backdrop-blur-md w-full md:w-auto"

@@ -25,7 +25,7 @@ function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Welcome back to AnimeVerse 🚀");
-      navigate("/home");
+     navigate("/home", { replace: true });
     } catch (error) {
       alert(error.message);
     }
@@ -44,7 +44,8 @@ function Login() {
 
         {/* Back Arrow */}
         <IoArrowBack
-          onClick={() => navigate("/signup")}
+          onClick={() =>navigate("/signup", { replace: true })}
+
           className="text-white text-2xl cursor-pointer mb-4 hover:scale-110 transition"
         />
 

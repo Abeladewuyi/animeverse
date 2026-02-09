@@ -43,7 +43,7 @@ function Signup() {
 
       alert("Welcome to AnimeVerse 🚀");
 
-      navigate("/home");
+      navigate("/home", { replace: true });
 
     } catch (error) {
 
@@ -68,7 +68,7 @@ function Signup() {
 
         {/* Back Arrow */}
         <IoArrowBack
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/login", { replace: true })}
           className="text-white text-2xl cursor-pointer mb-4 hover:scale-110 transition"
         />
 
