@@ -1,37 +1,33 @@
-import { db } from "../firebase";
-import {
-  doc,
-  setDoc,
-  serverTimestamp
-} from "firebase/firestore";
-import logo from "../assets/logo.png";
-import animeBg from "../assets/anime-bg.png";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase";
+import { db } from "../firebase";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+
+import logo from "../assets/logo.png";
+import animeBg from "../assets/anime-bg.png";
 
 import { IoArrowBack } from "react-icons/io5";
 
 function Signup() {
-
   const navigate = useNavigate();
 
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [Username, setUsername] = useState("");
 
   const handleSignup = async () => {
+    if (!username) {
+      alert("Please enter a username");
+      return;
+    }
 
-    if(!username){
-  alert("Please enter a username");
-  return;
-}
-if (!email || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       alert("Please fill all fields");
       return;
     }
@@ -47,28 +43,27 @@ if (!email || !password || !confirmPassword) {
     }
 
     try {
-
       setLoading(true);
 
-     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-const user = userCredential.user;
+      const user = userCredential.user;
 
-// 🔥 create Firestore profile
-await setDoc(doc(db, "users", user.uid), {
-  Username: Username,
-  email: user.email,
-  createdAt: new date()
-});
+      // 🔥 Save user profile to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        username: username,
+        email: user.email,
+        createdAt: serverTimestamp(),
+      });
 
       alert("Welcome to AnimeVerse 🚀");
-
       navigate("/home", { replace: true });
-
     } catch (error) {
-
       alert(error.message);
-
     } finally {
       setLoading(false);
     }
@@ -79,25 +74,15 @@ await setDoc(doc(db, "users", user.uid), {
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: `url(${animeBg})` }}
     >
-
-      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* Card */}
       <div className="relative z-10 bg-white/5 backdrop-blur-2xl border border-white/10 p-10 rounded-3xl w-[400px] shadow-[0_0_60px_rgba(99,102,241,0.35)]">
-
-        {/* Back Arrow */}
         <IoArrowBack
           onClick={() => navigate("/login", { replace: true })}
           className="text-white text-2xl cursor-pointer mb-4 hover:scale-110 transition"
         />
 
-        {/* Logo */}
-        <img
-          src={logo}
-          alt="AnimeVerse"
-          className="h-16 mx-auto mb-4"
-        />
+        <img src={logo} alt="AnimeVerse" className="h-16 mx-auto mb-4" />
 
         <h1 className="text-3xl font-bold text-white text-center mb-2">
           Create Your Universe
@@ -106,20 +91,20 @@ await setDoc(doc(db, "users", user.uid), {
         <p className="text-gray-400 text-center mb-8">
           Join AnimeVerse and begin your journey.
         </p>
-    <input
-  type="text"
-  placeholder="Username"
-  className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-  onChange={(e) => setUsername(e.target.value)}
-/>
 
+        {/* USERNAME */}
+        <input
+          type="text"
+          placeholder="Username"
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
         {/* EMAIL */}
         <input
           type="email"
           placeholder="Email"
           className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -128,7 +113,6 @@ await setDoc(doc(db, "users", user.uid), {
           type="password"
           placeholder="Password"
           className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -137,11 +121,9 @@ await setDoc(doc(db, "users", user.uid), {
           type="password"
           placeholder="Confirm Password"
           className="w-full mb-6 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
 
-        {/* BUTTON */}
         <button
           onClick={handleSignup}
           disabled={loading}
@@ -150,7 +132,6 @@ await setDoc(doc(db, "users", user.uid), {
           {loading ? "Creating Account..." : "Enter AnimeVerse 🚀"}
         </button>
 
-        {/* LOGIN LINK */}
         <p className="text-gray-400 text-center mt-6">
           Already have an account?{" "}
           <span
@@ -160,7 +141,6 @@ await setDoc(doc(db, "users", user.uid), {
             Login
           </span>
         </p>
-
       </div>
     </div>
   );
