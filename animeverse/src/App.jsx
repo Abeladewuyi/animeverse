@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./pages/Profile";
+import Profile from "./components/Profile";
 
 
 function App() {
@@ -15,8 +15,13 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/home" element={<ProtectedRoute>
       <Home /></ProtectedRoute>}/>
-      <Route path="/profile" element={<Profile />} />
-
+      <Route path="/profile" element={
+   <ProtectedRoute>
+      <Profile/>
+   </ProtectedRoute>
+ }
+/>
+  
     </Routes>
   );
 }
