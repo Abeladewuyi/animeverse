@@ -4,6 +4,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -12,9 +14,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/home" element={<ProtectedRoute>
-      <Home /></ProtectedRoute>
-  } 
-/>
+      <Home /></ProtectedRoute>}/>
+      <Route path="/profile" element={<Profile />} />
+
     </Routes>
   );
 }
