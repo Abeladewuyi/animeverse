@@ -1,5 +1,4 @@
 import { db } from "../firebase";
-
 import {
   doc,
   setDoc,
@@ -24,10 +23,15 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [Username, setUsername] = useState("");
 
   const handleSignup = async () => {
 
-    if (!email || !password || !confirmPassword) {
+    if(!username){
+  alert("Please enter a username");
+  return;
+}
+if (!email || !password || !confirmPassword) {
       alert("Please fill all fields");
       return;
     }
@@ -52,9 +56,9 @@ const user = userCredential.user;
 
 // 🔥 create Firestore profile
 await setDoc(doc(db, "users", user.uid), {
-  name: "AnimeVerse User",
+  Username: Username,
   email: user.email,
-  createdAt: serverTimestamp()
+  createdAt: new date()
 });
 
       alert("Welcome to AnimeVerse 🚀");
@@ -102,6 +106,13 @@ await setDoc(doc(db, "users", user.uid), {
         <p className="text-gray-400 text-center mb-8">
           Join AnimeVerse and begin your journey.
         </p>
+    <input
+  type="text"
+  placeholder="Username"
+  className="w-full mb-4 px-4 py-3 rounded-xl bg-transparent border border-indigo-400/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+  onChange={(e) => setUsername(e.target.value)}
+/>
+
 
         {/* EMAIL */}
         <input
