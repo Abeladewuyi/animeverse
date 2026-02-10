@@ -1,3 +1,10 @@
+import { db } from "../firebase";
+
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from "firebase/firestore";
 import logo from "../assets/logo.png";
 import animeBg from "../assets/anime-bg.png";
 
@@ -39,7 +46,16 @@ function Signup() {
 
       setLoading(true);
 
-      await createUserWithEmailAndPassword(auth, email, password);
+     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+const user = userCredential.user;
+
+// 🔥 create Firestore profile
+await setDoc(doc(db, "users", user.uid), {
+  name: "AnimeVerse User",
+  email: user.email,
+  createdAt: serverTimestamp()
+});
 
       alert("Welcome to AnimeVerse 🚀");
 
