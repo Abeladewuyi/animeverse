@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import {
@@ -7,6 +7,7 @@ import {
   where,
   getDocs,
   doc,
+  getDoc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -19,6 +20,7 @@ function Friends() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [sentRequests, setSentRequests] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
@@ -32,9 +34,9 @@ function Friends() {
       );
       const querySnap = await getDocs(q);
       const results = [];
-      querySnap.forEach((doc) => {
-        if (doc.id !== user.uid) {
-          results.push({ id: doc.id, ...doc.data() });
+      querySnap.forEach((d) => {
+        if (d.id !== user.uid) {
+          results.push({ id: d.id, ...d.data() });
         }
       });
       setSearchResults(results);
@@ -51,6 +53,7 @@ function Friends() {
       await updateDoc(targetRef, {
         friendRequests: arrayUnion(user.uid),
       });
+      setSentRequests((prev) => [...prev, targetUserId]);
       alert("Friend request sent!");
     } catch (error) {
       alert(error.message);
@@ -59,7 +62,6 @@ function Friends() {
 
   const acceptFriendRequest = async (requesterId) => {
     try {
-      // Add each other as friends
       const userRef = doc(db, "users", user.uid);
       const requesterRef = doc(db, "users", requesterId);
 
@@ -72,14 +74,11 @@ function Friends() {
         friends: arrayUnion(user.uid),
       });
 
-      // Update local state
       setUserData((prev) => ({
         ...prev,
         friends: [...(prev.friends || []), requesterId],
         friendRequests: prev.friendRequests.filter((id) => id !== requesterId),
       }));
-
-      alert("Friend added!");
     } catch (error) {
       alert(error.message);
     }
@@ -138,7 +137,6 @@ function Friends() {
       </nav>
 
       <div className="max-w-2xl mx-auto px-6 py-10">
-
         <h1 className="text-3xl font-bold mb-8">Friends</h1>
 
         {/* Search */}
@@ -183,8 +181,10 @@ function Friends() {
                     >
                       Remove
                     </button>
-                  ) : userData?.friendRequests?.includes(result.id) ? (
-                    <span className="text-gray-400 text-sm">Request Pending</span>
+                  ) : sentRequests.includes(result.id) ? (
+                    <span className="text-gray-400 text-sm px-4 py-2 rounded-xl bg-white/5 border border-white/10">
+                      Sent ✓
+                    </span>
                   ) : (
                     <button
                       onClick={() => sendFriendRequest(result.id)}
@@ -245,7 +245,6 @@ function Friends() {
             </div>
           )}
         </section>
-
       </div>
     </div>
   );
@@ -254,12 +253,9 @@ function Friends() {
 // Friend Card Component
 function FriendCard({ friendId, onRemove }) {
   const [friendData, setFriendData] = useState(null);
-  const { db } = useAuth();
 
   useEffect(() => {
     const fetchFriend = async () => {
-      const { doc, getDoc } = await import("firebase/firestore");
-      const { db } = await import("../firebase");
       const docSnap = await getDoc(doc(db, "users", friendId));
       if (docSnap.exists()) setFriendData(docSnap.data());
     };
@@ -292,8 +288,6 @@ function FriendRequestCard({ requesterId, onAccept, onDecline }) {
 
   useEffect(() => {
     const fetchRequester = async () => {
-      const { doc, getDoc } = await import("firebase/firestore");
-      const { db } = await import("../firebase");
       const docSnap = await getDoc(doc(db, "users", requesterId));
       if (docSnap.exists()) setRequesterData(docSnap.data());
     };
