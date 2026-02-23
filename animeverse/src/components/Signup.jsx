@@ -52,13 +52,16 @@ function Signup() {
       );
 
       const user = userCredential.user;
-
-      // 🔥 Save user profile to Firestore
+      
       await setDoc(doc(db, "users", user.uid), {
-        username: username,
-        email: user.email,
-        createdAt: serverTimestamp(),
-      });
+  username: username,
+  email: user.email,
+  photoURL: "",
+  bio: "",
+  friends: [],
+  friendRequests: [],
+  createdAt: serverTimestamp(),
+});
 
       alert("Welcome to AnimeVerse 🚀");
       navigate("/home", { replace: true });

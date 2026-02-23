@@ -15,6 +15,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -23,11 +24,13 @@ function Login() {
     }
 
     try {
+      setLoading(true);
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Welcome back to AnimeVerse 🚀");
-     navigate("/home", { replace: true });
+      navigate("/home", { replace: true });
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,20 +39,15 @@ function Login() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: `url(${animeBg})` }}
     >
-      {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/70"></div>
 
-      {/* Card */}
       <div className="relative z-10 bg-white/5 backdrop-blur-2xl border border-white/10 p-10 rounded-3xl w-[400px] shadow-[0_0_60px_rgba(99,102,241,0.35)]">
 
-        {/* Back Arrow */}
         <IoArrowBack
-          onClick={() =>navigate("/signup", { replace: true })}
-
+          onClick={() => navigate("/signup", { replace: true })}
           className="text-white text-2xl cursor-pointer mb-4 hover:scale-110 transition"
         />
 
-        {/* Logo */}
         <img src={logo} alt="AnimeVerse" className="h-16 mx-auto mb-4" />
 
         <h1 className="text-3xl font-bold text-white text-center mb-2">
@@ -60,7 +58,6 @@ function Login() {
           Log in and continue your anime journey.
         </p>
 
-        {/* Email */}
         <input
           type="email"
           placeholder="Email"
@@ -69,7 +66,6 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* Password */}
         <div className="relative mb-6">
           <input
             type={showPassword ? "text" : "password"}
@@ -78,7 +74,6 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
           <span
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-4 top-3 cursor-pointer text-gray-300"
@@ -87,17 +82,16 @@ function Login() {
           </span>
         </div>
 
-        {/* Login Button */}
         <button
           onClick={handleLogin}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hover:scale-105 transition"
+          disabled={loading}
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hover:scale-105 transition disabled:opacity-50"
         >
-          Enter Universe 🚀
+          {loading ? "Logging in..." : "Enter Universe 🚀"}
         </button>
 
-        {/* Signup Link */}
         <p className="text-gray-400 text-center mt-6">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <span
             onClick={() => navigate("/signup")}
             className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent cursor-pointer font-semibold"
