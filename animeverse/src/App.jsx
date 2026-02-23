@@ -5,6 +5,7 @@ import Signup from "./components/Signup";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Profile";
+import Friends from "./components/Friends";
 
 
 function App() {
@@ -21,7 +22,11 @@ function App() {
    </ProtectedRoute>
  }
 />
-  
+     <Route path="/friends" element={
+  <ProtectedRoute>
+    <Friends />
+  </ProtectedRoute>
+} />
     </Routes>
   );
 }
