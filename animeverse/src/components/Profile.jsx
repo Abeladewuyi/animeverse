@@ -1,20 +1,31 @@
+import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
-useEffect(() => {
+function Profile() {
+  const [userData, setUserData] = useState(null);
 
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
 
-    if(!user) return;
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
 
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setUserData(docSnap.data());
+      }
+    });
 
-    if(docSnap.exists()){
-      setUserData(docSnap.data());
-    }
+    return () => unsubscribe();
+  }, []);
 
-  });
+  return (
+    <div>
+      Profile Page
+    </div>
+  );
+}
 
-  return () => unsubscribe();
-
-}, []);
+export default Profile;

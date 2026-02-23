@@ -16,7 +16,7 @@ function ProtectedRoute({ children }) {
 
   // ⏳ wait while Firebase checks auth
   if (user === undefined) {
-    return null;
+    return <div>Loading.....</div>;
   }
 
   return user ? children : <Navigate to="/login" replace />;
