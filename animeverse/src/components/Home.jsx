@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useActivity } from "../context/ActivityContext";
 import { useNavigate } from "react-router-dom";
+import { getTopAnime } from "../api/anime";
 
 function Home() {
   const { userData } = useAuth();
   const { feed, loading } = useActivity();
   const navigate = useNavigate();
+
+  const [topAnime, setTopAnime] = useState([]);
+
+  useEffect(() => {
+    const fetchAnime = async () => {
+      const data = await getTopAnime();
+      setTopAnime(data);
+    };
+    fetchAnime();
+  }, []);
 
   const getActivityColor = (type) => {
     switch (type) {
@@ -59,23 +71,32 @@ function Home() {
           Ready to continue your anime journey?
         </p>
 
-        {/* Continue Watching */}
+        {/* Top Anime */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Continue Watching</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-indigo-600/30 h-40 rounded-2xl flex items-center justify-center hover:scale-105 transition cursor-pointer">
-              Naruto
+          <h2 className="text-2xl font-semibold mb-4">Top Anime</h2>
+          {topAnime.length === 0 ? (
+            <p className="text-gray-400">Loading anime...</p>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {topAnime.slice(0, 8).map((anime) => (
+                <div
+                  key={anime.mal_id}
+                  onClick={() => navigate(`/anime/${anime.mal_id}`)}
+                  className="rounded-2xl overflow-hidden cursor-pointer hover:scale-105 transition"
+                >
+                  <img
+                    src={anime.images?.jpg?.image_url}
+                    alt={anime.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="bg-white/5 p-3">
+                    <p className="font-semibold text-sm truncate">{anime.title}</p>
+                    <p className="text-gray-400 text-xs">⭐ {anime.score}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="bg-purple-600/30 h-40 rounded-2xl flex items-center justify-center hover:scale-105 transition cursor-pointer">
-              Attack on Titan
-            </div>
-            <div className="bg-pink-600/30 h-40 rounded-2xl flex items-center justify-center hover:scale-105 transition cursor-pointer">
-              Jujutsu Kaisen
-            </div>
-            <div className="bg-blue-600/30 h-40 rounded-2xl flex items-center justify-center hover:scale-105 transition cursor-pointer">
-              Demon Slayer
-            </div>
-          </div>
+          )}
         </section>
 
         {/* Friend Activity */}

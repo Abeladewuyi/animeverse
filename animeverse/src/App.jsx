@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Profile";
 import Friends from "./components/Friends";
+import AnimePage from "./components/AnimePage";
 
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
      <Route path="/friends" element={
   <ProtectedRoute>
     <Friends />
+  </ProtectedRoute>
+} />
+<Route path="/anime/:id" element={
+  <ProtectedRoute>
+    <AnimePage />
   </ProtectedRoute>
 } />
     </Routes>
