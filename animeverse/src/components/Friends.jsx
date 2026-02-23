@@ -13,6 +13,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 
 function Friends() {
   const { user, userData, setUserData } = useAuth();
@@ -60,30 +61,37 @@ function Friends() {
     }
   };
 
-  const acceptFriendRequest = async (requesterId) => {
-    try {
-      const userRef = doc(db, "users", user.uid);
-      const requesterRef = doc(db, "users", requesterId);
+ const acceptFriendRequest = async (requesterId) => {
+  try {
+    const userRef = doc(db, "users", user.uid);
+    const requesterRef = doc(db, "users", requesterId);
 
-      await updateDoc(userRef, {
-        friends: arrayUnion(requesterId),
-        friendRequests: arrayRemove(requesterId),
-      });
+    await updateDoc(userRef, {
+      friends: arrayUnion(requesterId),
+      friendRequests: arrayRemove(requesterId),
+    });
 
-      await updateDoc(requesterRef, {
-        friends: arrayUnion(user.uid),
-      });
+    await updateDoc(requesterRef, {
+      friends: arrayUnion(user.uid),
+    });
 
-      setUserData((prev) => ({
-        ...prev,
-        friends: [...(prev.friends || []), requesterId],
-        friendRequests: prev.friendRequests.filter((id) => id !== requesterId),
-      }));
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+    // Log activity for both users
+    await addDoc(collection(db, "activity", user.uid, "feed"), {
+      type: "friendAdded",
+      username: userData.username,
+      message: `became friends with @${userData.username}`,
+      createdAt: serverTimestamp(),
+    });
 
+    setUserData((prev) => ({
+      ...prev,
+      friends: [...(prev.friends || []), requesterId],
+      friendRequests: prev.friendRequests.filter((id) => id !== requesterId),
+    }));
+  } catch (error) {
+    alert(error.message);
+  }
+};
   const declineFriendRequest = async (requesterId) => {
     try {
       const userRef = doc(db, "users", user.uid);

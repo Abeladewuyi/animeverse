@@ -1,15 +1,28 @@
 import { useAuth } from "../context/AuthContext";
+import { useActivity } from "../context/ActivityContext";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
 
 function Home() {
   const { userData } = useAuth();
+  const { feed, loading } = useActivity();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/", { replace: true });
+  const getActivityColor = (type) => {
+    switch (type) {
+      case "watched": return "text-indigo-400";
+      case "commented": return "text-purple-400";
+      case "friendAdded": return "text-pink-400";
+      default: return "text-gray-400";
+    }
+  };
+
+  const timeAgo = (timestamp) => {
+    if (!timestamp) return "";
+    const seconds = Math.floor((Date.now() - timestamp.toMillis()) / 1000);
+    if (seconds < 60) return "just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
   };
 
   return (
@@ -22,17 +35,17 @@ function Home() {
         </h1>
         <div className="flex items-center gap-4">
           <button
+            onClick={() => navigate("/friends")}
+            className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:scale-105 transition text-sm"
+          >
+            Friends
+          </button>
+          <button
             onClick={() => navigate("/profile")}
             className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-sm"
           >
             {userData?.username?.charAt(0).toUpperCase()}
           </button>
-          <button
-  onClick={() => navigate("/friends")}
-  className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:scale-105 transition text-sm"
->
-  Friends
-</button>
         </div>
       </nav>
 
@@ -68,16 +81,36 @@ function Home() {
         {/* Friend Activity */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">Friend Activity 🔥</h2>
-          <div className="space-y-4">
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-              <span className="font-semibold text-indigo-400">@zenitsu</span>{" "}
-              just watched <span className="font-semibold">Demon Slayer</span>
+
+          {loading ? (
+            <p className="text-gray-400">Loading activity...</p>
+          ) : feed.length === 0 ? (
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center">
+              <p className="text-gray-400">No activity yet.</p>
+              <p className="text-gray-500 text-sm mt-1">
+                Add friends to see what they are watching!
+              </p>
             </div>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-              <span className="font-semibold text-purple-400">@itachi</span>{" "}
-              commented on <span className="font-semibold">Naruto</span>
+          ) : (
+            <div className="space-y-4">
+              {feed.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between"
+                >
+                  <p>
+                    <span className={`font-semibold ${getActivityColor(activity.type)}`}>
+                      @{activity.username}
+                    </span>{" "}
+                    {activity.message}
+                  </p>
+                  <span className="text-gray-500 text-xs ml-4 whitespace-nowrap">
+                    {timeAgo(activity.createdAt)}
+                  </span>
+                </div>
+              ))}
             </div>
-          </div>
+          )}
         </section>
 
       </div>
