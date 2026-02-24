@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import Friends from "./components/Friends";
 import AnimePage from "./components/AnimePage";
 import Search from "./components/Search";
+import Comments from "./components/Comments";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute> }/><Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
       <Route path="/anime/:id" element={<ProtectedRoute><AnimePage /></ProtectedRoute>} />
       <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
+      <Route path="/anime/:id/comments" element={ <ProtectedRoute><Comments /></ProtectedRoute>} />
     </Routes>
   );
 }
