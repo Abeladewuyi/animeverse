@@ -47,6 +47,12 @@ function Home() {
         </h1>
         <div className="flex items-center gap-3">
           <button
+  onClick={() => navigate("/search")}
+  className="px-3 sm:px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:scale-105 transition text-sm"
+>
+  Search
+</button>
+<button
             onClick={() => navigate("/friends")}
             className="px-3 sm:px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:scale-105 transition text-sm"
           >
@@ -58,12 +64,7 @@ function Home() {
           >
             {userData?.username?.charAt(0).toUpperCase()}
           </button>
-          <button
-  onClick={() => navigate("/search")}
-  className="px-3 sm:px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:scale-105 transition text-sm"
->
-  Search
-</button>
+          
         </div>
       </nav>
 
