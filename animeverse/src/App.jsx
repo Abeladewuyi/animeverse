@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./components/Profile";
 import Friends from "./components/Friends";
 import AnimePage from "./components/AnimePage";
+import Search from "./components/Search";
 
 
 function App() {
@@ -17,22 +18,9 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/home" element={<ProtectedRoute>
       <Home /></ProtectedRoute>}/>
-      <Route path="/profile" element={
-   <ProtectedRoute>
-      <Profile/>
-   </ProtectedRoute>
- }
-/>
-     <Route path="/friends" element={
-  <ProtectedRoute>
-    <Friends />
-  </ProtectedRoute>
-} />
-<Route path="/anime/:id" element={
-  <ProtectedRoute>
-    <AnimePage />
-  </ProtectedRoute>
-} />
+      <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute> }/><Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>} />
+      <Route path="/anime/:id" element={<ProtectedRoute><AnimePage /></ProtectedRoute>} />
+      <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
     </Routes>
   );
 }
