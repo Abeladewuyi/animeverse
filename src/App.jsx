@@ -187,7 +187,7 @@ heroWrapper: {
   gap: "20px",
   transform:"scale(1.4)",
   transformOrigin:"top left",
-  marginTop:"200px"
+  marginbottom:"200px"
 },
   heroLeftMobile: {
   display: "flex",
