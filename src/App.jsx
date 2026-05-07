@@ -296,6 +296,7 @@ streamImg:{
     fontFamily:"Plus Jakarta Sans",
     textAlign:"center",
     letterSpacing:"-3%",
+    marginTop: "120px",
   },
 
   featuresRow:{
