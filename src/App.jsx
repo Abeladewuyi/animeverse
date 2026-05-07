@@ -187,7 +187,7 @@ heroWrapper: {
   gap: "20px",
   transform:"scale(1.4)",
   transformOrigin:"top left",
-  marginbottom:"200px"
+  marginbottom:"100px"
 },
   heroLeftMobile: {
   display: "flex",
@@ -285,7 +285,7 @@ streamImg:{
     color: "#FFFFFFCC",
     textAlign: "center",
     maxWidth: "700px",
-    margin: "-25px auto 50px",
+    margin: "25px auto 50px",
     lineHeight: 1.6,
     fontSize:"18px"
   },
