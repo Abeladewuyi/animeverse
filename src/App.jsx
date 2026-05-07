@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaRegCommentDots, FaHeart, FaEye } from "react-icons/fa";
 import logo from "./assets/logo.png";
 import lightDesktop from "./assets/light-desktop.png";
-import "./app.css";
+import "./App.css";
 import lightMobile from "./assets/light-mobile.png";
 import suzume from "./assets/suzume.png";
 import soloLeveling from "./assets/solo-leveling.png";
@@ -458,7 +458,6 @@ shareImageWrap:{
 
   badge: {marginBottom:"20px",
     display:"flex",
-    marginBottom:"-30px",
  },
  badgeimg:{
   height:isDesktop ? "51px": "67px",
@@ -534,7 +533,7 @@ leftCharacter: {
   bottom: "0",
   width: "200px",
   height:"500px",
-  left:"-40px"
+
 },
 
 rightCharacter: {
