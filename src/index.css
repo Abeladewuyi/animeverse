@@ -1,0 +1,52 @@
+.hero-collage {
+  position: relative;
+  width: 100%;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.postStats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-top: 12px;
+  color: #9ca3af; /* soft grey */
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.statItem:hover {
+  color: white;
+}
+
+/* IMAGE */
+.hero-collage img {
+  width: 130%;
+  transform: rotate(-8deg);
+  opacity: 0.95;
+
+  /* 👇 THIS IS THE IMPORTANT PART */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 20%,
+    black 80%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+   transparent 0%,
+black 40%,
+black 60%,
+transparent 100%
+  );
+}
