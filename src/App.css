@@ -84,7 +84,7 @@ html:{
 }
 
 .scroller-inner span {
-  color: #FFFFFFAD;
+  color: red !important;
   font-weight: 400;
   font-size: 40px;
   width: 77px;
