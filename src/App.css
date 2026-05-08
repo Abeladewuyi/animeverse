@@ -62,26 +62,37 @@ html:{
   width: 100%;
   background:#191919;
   padding: 10px 0;
-  transform: rotate(-1.87deg);
+  transform: rotate(1.97deg);
   white-space:nowrap;
   position: relative;
-  margin-bottom:"80px";
-  margin-top;:"20px"
+  height: 68px;
+  width: calc(100% + 180px);
+  margin-top;:"20px";
+  z-index: 2;
+  left: -90px;
+  opacity: 0.68;
  
 }
 
 .scroller-inner {
   display: flex;
-  gap: 40px;
+  gap: 48px;
   width: max-content;
   animation: scroll 15s linear infinite;
-  margin-bottom: 70px;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .scroller-inner span {
   color: #FFFFFFAD;
   font-weight: 400;
-  white-space: nowrap;
+  font-size: 40px;
+  width: 77px;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 100%;
+  display: flex;
   font-family: Bebas Neue;
 }
 .nav-link {
