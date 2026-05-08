@@ -474,7 +474,22 @@ shareImageWrap:{
   letterSpacing: "-3%",
   marginBottom:"0px",
  },
+ scroller: {
+  overflow: "hidden",
+  width: "100%",
+  background:"#191919",
+  padding: "10px 0",
+  transform: "rotate(1.97deg)",
+  whitespace:"nowrap",
+  position: relative,
+  height: "68px",
+  width: "calc(100% + 180px)",
+  margintop:"20px",
+  zindex: 2,
+  left: "-90px",
+  opacity: 0.68,
  
+},
   ctaGroup: { display: "flex", flexDirection: isDesktop ? "row" : "row", gap: "10px" },
   btnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
