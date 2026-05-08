@@ -62,7 +62,11 @@ html:{
   width: 100%;
   background:#191919;
   padding: 10px 0;
-  transform: rotate(-1.97deg);
+  transform: rotate(-1.87deg);
+  white-space:nowrap;
+  position: relative;
+  margin-bottom:"80px";
+  margin-top;:"20px"
  
 }
 
