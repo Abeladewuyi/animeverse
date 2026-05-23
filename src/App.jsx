@@ -470,7 +470,8 @@ shareImageWrap:{
       color:"rgba(255,255,255,0.7",
       fontSize:"18px",
       maxWidth:"600px",
-      marginTop:"24px"
+      marginTop:"24px",
+      marginBottom:"40px"
      },
   footerLogoImg: { width: "100%", maxWidth: isDesktop ? "900px" : "300px", opacity:0.23, marginTop: "10px" },
   logoWrap:{
@@ -510,6 +511,11 @@ shareImageWrap:{
   btnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
     borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
+  },
+  footerBtnPrimary: {
+    background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
+    borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
+    marginTop: "30px"
   },
   btnPrimaryHover:{
     transform:"translateY(-2px)",
@@ -816,7 +822,7 @@ rightCharacter: {
           Animeverse is the ultimate destination for the modern fan. Watch, react, and connect
           in a world built by otakus, for otakus.
         </p>
-        <button style={styles.btnPrimary}>Sign Up Free →</button>
+        <button style={styles.footerBtnPrimary}>Sign Up Free →</button>
     <div style={styles.socialRow}>
   <img src={discordIcon} alt="Discord" style={styles.socialIcon} />
   
