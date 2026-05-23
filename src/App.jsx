@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { FaRegCommentDots, FaHeart, FaEye } from "react-icons/fa";
 import logo from "./assets/logo.png";
 import lightDesktop from "./assets/light-desktop.png";
@@ -82,6 +82,7 @@ const styles = {
     backgroundSize:"1600px", 
     position: "relative",
     overflowX: "hidden",
+
   },
   // Floating Characters (Desktop Only)
   floatingCharLeft: {
@@ -106,11 +107,12 @@ const styles = {
   },
 
   pageContainer: {
-    maxWidth: "1200px",
+    maxWidth: "1500px",
     margin: "0 ",
     padding: isDesktop ? "0 40px" : "0 20px",
     position: "relative",
-    zIndex: 2, // Keeps content above floating characters
+    zIndex: 2, // Keeps content above floating characters,
+    width:"100%"
   },
 
   // --- NAVIGATION ---
@@ -121,20 +123,28 @@ const styles = {
     padding: "20px 0",
     top:"0px",
     zIndex:10,
+    width:"529px"
     
   },
   
   logo: { 
-    height: isDesktop ? "34px" : "21px",
-     marginTop:isDesktop ? "42px":"2px",
+    height: isDesktop ? "34px" : "21.521484375px",
+    width: isDesktop ? "auto" : "82.32264709472656px",
+    marginTop: isDesktop ? "42px" : "0px",
+    top: isDesktop ? "auto" : "65.2px",
+    left: isDesktop ? "auto" : "19.5px",
+    position: isDesktop ? "relative" : "absolute",
+    opacity: 1,
   },
+
 navItem: {
   position: "relative",
-  padding: "10px 20px",
+  padding: "10px 10px",
   cursor: "pointer",
   zIndex: 1,
   color: "#fff",
   fontWeight: 500,
+  justifyContent:"center"
 },
 navIndicator: {
   position: "absolute",
@@ -151,23 +161,31 @@ navIndicator: {
     alignItems:"center",
     borderRadius:"999px",
     color:"#FFFFFF38",
-    gap:"32px",
-    width:"fit-content",
+    gap:"28px",
+    width:"529px",
     border:"1px solid rgba(255,255,255,0.3)",
     backdropFilter:"blur(12px)",
-    padding:"21px 40px",
+    padding:"21px 43px",
     position:"absolute",
     top:"42px",
     left:"50%",
     transform:"translateX(-50%)",
-    zIndex:10
+    zIndex:10,
+    marginLeft:"79px"
   },
-  navLink: { color: "#fff", fontSize: "20px", cursor: "pointer", fontWeight: "500", fontFamily:"Satoshi Variable"},
+  navLink: { color: "#fff", fontSize: "20px", cursor: "pointer", fontWeight: "500", fontFamily:"Plus Jakarta Sans",
+    padding:"10px 16px",letterSpacing:"-5%"
+  },
 hamburger: {
   fontSize: "24px",
   color: "#fff",
   cursor: "pointer",
-  height:"21px",
+  width: isDesktop ? "auto" : "24px",
+  height: isDesktop ? "auto" : "24px",
+  top: isDesktop ? "auto" : "62px",
+  left: isDesktop ? "auto" : "349px",
+  position: isDesktop ? "relative" : "absolute",
+  opacity: 1,
 },
   // --- HERO SECTION ---
 heroWrapper: {
@@ -182,12 +200,11 @@ heroWrapper: {
  heroLeftDesktop: {
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
   textAlign: "left",
   gap: "20px",
-  transform:"scale(1.4)",
-  transformOrigin:"top left",
-  marginbottom:"100px"
+  flex:"1",
+  maxWidth:"500px"
+
 },
   heroLeftMobile: {
   display: "flex",
@@ -213,10 +230,14 @@ heroWrapper: {
     color: "#FFFFFFCC",
     lineHeight: "100%",
     fontFamily:"Plus Jakarta Sans",
-    letterSpacing:"3%",
+    letterSpacing:"2%",
     marginBottom: "30px",
-    maxWidth: isDesktop ? "500px" : "300px",
-    margin: "0 auto 28px", 
+    maxWidth: isDesktop ? "none" : "300px",
+    margin: "-15px auto 28px", 
+    width:"700px",
+    display:"inline-block"
+    
+    
   },
 heroRight: {
   position: "relative",
@@ -257,16 +278,18 @@ collageFadeMobile: {
 },
 
 heroCollageImg: {
-  width: "120%",
-  height: "auto",
-  maxWidth: isDesktop ? "800px" : "450px", // Larger limit for the desktop collage
+  width: isDesktop ? "120%" : "450px",
+  height: isDesktop ? "auto" : "450px",
+  maxWidth: isDesktop ? "800px" : "none",
   objectFit: "cover",
-  // Optional: Add a subtle entrance animation
   animation: "fadeUp 1s ease-out",
-  position:"relative",
-  zIndex:1,
-  transform:"translateX(120px)"
-
+  position: isDesktop ? "relative" : "absolute",
+  top: isDesktop ? "auto" : "180px",
+  left: isDesktop ? "auto" : "-101.11px",
+  zIndex: 1,
+  transform: isDesktop ? "translateX(120px)" : "rotate(0deg)",
+  opacity: 1,
+  borderRadius: isDesktop ? "0px" : "6px",
 },
   // --- MARQUEE ---
 
@@ -324,13 +347,16 @@ streamImg:{
   display: "flex",
   flexDirection: "column",
   gap: "12px",
+  maxWidth:"520px",
+  left:"100px"
 },
 
 feedGrid: {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
+  display: "flex",
   gap: "24px",
-  padding: "0 40px",
+  justifyContent:"space-between",
+  alignItems:"flex-start",
+  width:"100%"
 },
 
 feedMobile: {
@@ -420,7 +446,7 @@ playOverlay: {
 shareImageWrap:{
   display:"flex",
   justifyContent:"center",
-  marginBottom:"20px",
+  marginBottom:"50px",
 },
   // --- FOOTER ---
   footer:{
@@ -435,7 +461,7 @@ shareImageWrap:{
   footerCta: { padding: "120px 0 60px", textAlign: "center" },
   footerH2: { 
     fontWeight: 600,
-     marginTop: "20px",
+     marginTop: "0px",
      color:"#ffffff",
      fontSize:"56px",
      fontFamily:"Plus Jakarta Sans"
@@ -444,7 +470,7 @@ shareImageWrap:{
       color:"rgba(255,255,255,0.7",
       fontSize:"18px",
       maxWidth:"600px",
-      marginTop:"-20px"
+      marginTop:"24px"
      },
   footerLogoImg: { width: "100%", maxWidth: isDesktop ? "900px" : "300px", opacity:0.23, marginTop: "10px" },
   logoWrap:{
@@ -457,24 +483,29 @@ shareImageWrap:{
 
   // --- REUSABLE COMPONENTS ---
 
-  badge: {marginBottom:"20px",
+  badge: {marginBottom:"-48px",
+    marginTop:"60px",
     display:"flex",
  },
  badgeimg:{
-  height:isDesktop ? "51px": "67px",
-  width:"auto",
+  height:isDesktop ? "66px": "67px",
+  width:"306px",
   display:"block",
   marginBottom:"10px",
  },
  h2:{
   fontFamily:"poppins",
   fontWeight:500,
-  fontSize:"30px",
+  fontSize:isDesktop ? "56px" : "30px",
   color:"#FFFFFF",
-  letterSpacing: "-3%",
-  marginBottom:"0px",
+  letterSpacing: "0.5px",
+  marginTop: "20px",
+  marginBottom:"20px",
+  maxWidth:isDesktop ? "none" : "100%",
+  lineHeight: 1,
+  whiteSpace: "nowrap"
  },
- 
+
   ctaGroup: { display: "flex", flexDirection: isDesktop ? "row" : "row", gap: "10px" },
   btnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
@@ -508,7 +539,14 @@ shareImageWrap:{
   statBanner: { order:isDesktop ? "unset": 3,
      marginTop: "20px",display:"flex",justifyContent:"flex-start",
    },
-  statImg: { width: "180px",
+  statImg: { 
+    width: isDesktop ? "180px" : "124.603759765625px",
+    height: isDesktop ? "auto" : "60.99849319458008px",
+    marginLeft: isDesktop ? "20px" : "0px",
+    top: isDesktop ? "auto" : "666.16px",
+    left: isDesktop ? "auto" : "134.2px",
+    position: isDesktop ? "relative" : "absolute",
+    opacity: 1,
    },
   socialRow: {
      display: "flex",
@@ -592,7 +630,8 @@ rightCharacter: {
     <h2 style={styles.h2}>Don't Just Watch. Belong</h2>
 
     <p style={styles.heroP}>
-      Experience your favorite series alongside a global community. Stream the latest hits, join live watch parties, and find your nakama in the ultimate anime social hub.
+      Experience your favorite series alongside a global community. Stream the latest hits,
+      join live watch parties, and find your nakama in the ultimate anime social hub.
     </p>
 
     <div style={styles.ctaGroup}>

@@ -95,13 +95,7 @@ html:{
   display: flex;
   font-family: Bebas Neue;
 }
-.nav-link {
-  padding: 10px 16px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: rgba(255,255,255,0.8);
-}
+
 
 /* 🔥 HOVER GLOW */
 .nav-link:hover {
