@@ -79,7 +79,7 @@ const styles = {
     backgroundPosition: "top center",
     backgroundRepeat: "no-repeat",
     // 3. Keep it at the top so it doesn't stretch to the bottom
-    backgroundSize:"1600px", 
+    backgroundSize: isDesktop ? "1600px" : "430px auto",
     position: "relative",
     overflowX: "hidden",
 
@@ -109,7 +109,7 @@ const styles = {
   pageContainer: {
     maxWidth: "1500px",
     margin: "0 ",
-    padding: isDesktop ? "0 40px" : "0 20px",
+    padding: isDesktop ? "0 40px" : "0 14px",
     position: "relative",
     zIndex: 2, // Keeps content above floating characters,
     width:"100%"
@@ -123,13 +123,13 @@ const styles = {
     padding: "20px 0",
     top:"0px",
     zIndex:10,
-    width:"529px"
+    width: isDesktop ? "529px" : "100%"
     
   },
   
   logo: { 
-    height: isDesktop ? "34px" : "21.521484375px",
-    width: isDesktop ? "auto" : "82.32264709472656px",
+    height: isDesktop ? "41px" : "26px",
+    width: isDesktop ? "auto" : "99px",
     marginTop: isDesktop ? "42px" : "0px",
     top: isDesktop ? "auto" : "65.2px",
     left: isDesktop ? "auto" : "19.5px",
@@ -194,8 +194,8 @@ heroWrapper: {
   flexDirection: isDesktop ? "row" : "column", 
   alignItems: "center",
   justifyContent: "space-between",
-  gap: isDesktop ? "60px" : "30px",
-  marginTop: isDesktop ? "-110px" : "40px",
+  gap: isDesktop ? "60px" : "18px",
+  marginTop: isDesktop ? "-110px" : "32px",
 },
  heroLeftDesktop: {
   display: "flex",
@@ -211,8 +211,10 @@ heroWrapper: {
   flexDirection: "column",
   alignItems: "center",   // center everything
   textAlign: "center",
-  padding: "0 16px",      // side spacing
-  gap: "16px",            // consistent spacing
+  padding: "0 10px",
+  gap: "10px",
+  position: "relative",
+  zIndex: 3,
 },
 
   h1: {
@@ -231,21 +233,22 @@ heroWrapper: {
     lineHeight: "100%",
     fontFamily:"Plus Jakarta Sans",
     letterSpacing:"2%",
-    marginBottom: "30px",
+    marginBottom: "16px",
     maxWidth: isDesktop ? "none" : "300px",
-    margin: "-15px auto 28px", 
-    width:"700px",
+    margin: isDesktop ? "-15px auto 28px" : "0 auto 14px",
+    width: isDesktop ? "700px" : "auto",
     display:"inline-block"
     
     
   },
 heroRight: {
   position: "relative",
-  width: "50%",
+  width: isDesktop ? "50%" : "100%",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
-  marginTop: "100px", // 👈 THIS pushes it below navbar
+  marginTop: isDesktop ? "100px" : "-6px",
+  minHeight: isDesktop ? "auto" : "290px",
 },
 collageFade: {
   position: "absolute",
@@ -279,15 +282,15 @@ collageFadeMobile: {
 
 heroCollageImg: {
   width: isDesktop ? "120%" : "450px",
-  height: isDesktop ? "auto" : "450px",
+  height: isDesktop ? "auto" : "285px",
   maxWidth: isDesktop ? "800px" : "none",
   objectFit: "cover",
   animation: "fadeUp 1s ease-out",
   position: isDesktop ? "relative" : "absolute",
-  top: isDesktop ? "auto" : "180px",
-  left: isDesktop ? "auto" : "-101.11px",
+  top: isDesktop ? "auto" : "4px",
+  left: isDesktop ? "auto" : "50%",
   zIndex: 1,
-  transform: isDesktop ? "translateX(120px)" : "rotate(0deg)",
+  transform: isDesktop ? "translateX(120px)" : "translateX(-50%)",
   opacity: 1,
   borderRadius: isDesktop ? "0px" : "6px",
 },
@@ -308,18 +311,19 @@ streamImg:{
     color: "#FFFFFFCC",
     textAlign: "center",
     maxWidth: "700px",
-    margin: "25px auto 50px",
+    margin: isDesktop ? "25px auto 50px" : "16px auto 30px",
     lineHeight: 1.6,
-    fontSize:"18px"
+    fontSize: isDesktop ? "18px" : "10px",
+    maxWidth: isDesktop ? "700px" : "330px"
   },
   features:{
     color:"#FFFFFF",
-    fontSize:"40px",
+    fontSize: isDesktop ? "40px" : "40px",
     fontWeight:600,
     fontFamily:"Plus Jakarta Sans",
     textAlign:"center",
     letterSpacing:"-3%",
-    marginTop: "120px",
+    marginTop: isDesktop ? "120px" : "24px",
   },
 
   featuresRow:{
@@ -337,7 +341,7 @@ streamImg:{
     gap: "25px",
     justifyContent: "center",
   },
-  featureCardImg: { width: "100%", maxWidth: isDesktop ? "360px" : "300px", borderRadius: "15px" },
+  featureCardImg: { width: "100%", maxWidth: isDesktop ? "360px" : "245px", borderRadius: "15px" },
 
   // --- COMMUNITY FEED ---
  feedPost: {
@@ -347,13 +351,13 @@ streamImg:{
   display: "flex",
   flexDirection: "column",
   gap: "12px",
-  maxWidth:"520px",
+  maxWidth: isDesktop ? "520px" : "340px",
   left:"100px"
 },
 
 feedGrid: {
   display: "flex",
-  gap: "24px",
+  gap: "10px",
   justifyContent:"space-between",
   alignItems:"flex-start",
   width:"100%"
@@ -362,13 +366,13 @@ feedGrid: {
 feedMobile: {
   display: "flex",
   flexDirection: "column",
-  gap: "24px",
+  gap: "10px",
 },
 
 feedColumn: {
   display: "flex",
   flexDirection: "column",
-  gap: "24px",
+  gap: "10px",
 },
 postHeader: {
   display: "flex",
@@ -463,17 +467,17 @@ shareImageWrap:{
     fontWeight: 600,
      marginTop: "0px",
      color:"#ffffff",
-     fontSize:"56px",
+     fontSize: isDesktop ? "56px" : "48px",
      fontFamily:"Plus Jakarta Sans"
      },
      footerP:{
       color:"rgba(255,255,255,0.7",
-      fontSize:"18px",
-      maxWidth:"600px",
-      marginTop:"24px",
-      marginBottom:"40px"
+      fontSize: isDesktop ? "18px" : "13px",
+      maxWidth: isDesktop ? "600px" : "330px",
+      marginTop:"18px",
+      marginBottom:"26px"
      },
-  footerLogoImg: { width: "100%", maxWidth: isDesktop ? "900px" : "300px", opacity:0.23, marginTop: "10px" },
+  footerLogoImg: { width: "100%", maxWidth: isDesktop ? "1800px" : "360px", opacity:0.23, marginTop: "10px" },
   logoWrap:{
     marginTop:"50px",
     display:"flex",
@@ -485,32 +489,33 @@ shareImageWrap:{
   // --- REUSABLE COMPONENTS ---
 
   badge: {marginBottom:"-48px",
-    marginTop:"60px",
+    marginTop: isDesktop ? "60px" : "20px",
     display:"flex",
  },
  badgeimg:{
   height:isDesktop ? "66px": "67px",
-  width:"306px",
+  width:isDesktop ? "306px" : "216px",
   display:"block",
   marginBottom:"10px",
  },
  h2:{
   fontFamily:"poppins",
   fontWeight:500,
-  fontSize:isDesktop ? "56px" : "30px",
+  fontSize:isDesktop ? "56px" : "40px",
   color:"#FFFFFF",
   letterSpacing: "0.5px",
-  marginTop: "20px",
-  marginBottom:"20px",
-  maxWidth:isDesktop ? "none" : "100%",
-  lineHeight: 1,
-  whiteSpace: "nowrap"
+  marginTop: "8px",
+  marginBottom:"10px",
+  maxWidth:isDesktop ? "none" : "360px",
+  lineHeight: isDesktop ? 1 : 1.08,
+  whiteSpace: isDesktop ? "nowrap" : "normal"
  },
 
-  ctaGroup: { display: "flex", flexDirection: isDesktop ? "row" : "row", gap: "10px" },
+  ctaGroup: { display: "flex", flexDirection: "row", gap: isDesktop ? "10px" : "8px", justifyContent: "center" },
   btnPrimary: {
-    background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
+    background: "#f0ede8", color: "#0a0a0c", padding: isDesktop ? "15px 30px" : "11px 16px",
     borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
+    fontSize: isDesktop ? "16px" : "11px",
   },
   footerBtnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
@@ -524,13 +529,13 @@ shareImageWrap:{
   btnGhost: {
     backgroundColor:"#0A0A0A", 
     color: "#fff", 
-    padding: "10px 20px",
+    padding: isDesktop ? "10px 20px" : "10px 14px",
     borderRadius: "999px", 
     display:"inline-flex",
     gap:"4px",
     border: "1px solid rgba(255, 255, 255, 0.08)", 
     boxShadow:"inset 0 4px 16px rgba(255, 255, 255, 0.15)",
-    fontSize:"14px",
+    fontSize: isDesktop ? "14px" : "11px",
     cursor: "pointer",
     alignItems:"center"
   },
@@ -538,33 +543,35 @@ shareImageWrap:{
     boxShadow: "inset 0 4px 20px rgba(255,255,255,0.25)"
   },
   shareImage:{
-    width:"570px",
-    height:"115px",
+    width:isDesktop ? "570px" : "230px",
+    height:isDesktop ? "115px" : "46px",
     textAlignt:"center"
   },
   statBanner: { order:isDesktop ? "unset": 3,
-     marginTop: "20px",display:"flex",justifyContent:"flex-start",
+     marginTop: isDesktop ? "20px" : "12px",display:"flex",justifyContent: isDesktop ? "flex-start" : "center",
    },
   statImg: { 
     width: isDesktop ? "180px" : "124.603759765625px",
     height: isDesktop ? "auto" : "60.99849319458008px",
     marginLeft: isDesktop ? "20px" : "0px",
-    top: isDesktop ? "auto" : "666.16px",
-    left: isDesktop ? "auto" : "134.2px",
-    position: isDesktop ? "relative" : "absolute",
+    top: "auto",
+    left: "auto",
+    position: "relative",
     opacity: 1,
    },
   socialRow: {
      display: "flex",
      justifyContent: "center",
-    gap: "20px",
-   marginTop: "25px" },
+     gap: "20px",
+     marginTop: "25px"
+   },
   socialIcon: { 
-    width: "68px",
-    height: "68px", 
-    opacity: 0.8 },
-    cursor:"pointer",
-    transition:"transform 0.2s ease",
+    width: isDesktop ? "68px" : "48px",
+    height: isDesktop ? "68px" : "48px", 
+    opacity: 0.8,
+    cursor: "pointer",
+    transition: "transform 0.2s ease",
+  },
 
 footerWrapper: {
   position: "relative",
@@ -573,6 +580,7 @@ footerWrapper: {
 },
 
 leftCharacter: {
+  display: isDesktop ? "block" : "none",
   position: "absolute",
   left: "0",
   bottom: "0",
@@ -582,6 +590,7 @@ leftCharacter: {
 },
 
 rightCharacter: {
+  display: isDesktop ? "block" : "none",
   position: "absolute",
   right: "-90px",
   bottom: "0",
@@ -709,8 +718,8 @@ rightCharacter: {
     src={streamImg}
     alt="Stream your favourite series"
     style={{
-      width: 370,
-      height: "69px",
+      width: isDesktop ? 370 : 260,
+      height: isDesktop ? "69px" : "49px",
     }}
   />
 </div>
@@ -811,8 +820,8 @@ rightCharacter: {
 
       {/* 3. FOOTER */}
       <div style={styles.footerWrapper}>
-     <img src={leftCharacter} style={styles.leftCharacter} />
-     <img src={rightCharacter} style={styles.rightCharacter} />
+     {(isDesktop && <img src={leftCharacter} style={styles.leftCharacter} />)}
+     {(isDesktop && <img src={rightCharacter} style={styles.rightCharacter} />)}
       <footer style={styles.footer}>
          <div style={styles.shareImageWrap}> 
           <img src={shareSection} alt="Share section" style={styles.shareImage}/>

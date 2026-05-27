@@ -2,6 +2,8 @@
   margin: 0;
   padding: 0;
   text-align: center;
+  width: 100%;
+  overflow-x:hidden;
 
 }
 *{
@@ -9,15 +11,19 @@
   padding: 0;
   box-sizing: border-box;
 }
-body:{
+body{
   margin: 0;
   padding: 0;
   background: #000;
+  overflow-x: hidden;
+  width: 100%;
 }
-html:{
+html{
   margin: 0;
   padding: 0;
   background: #000;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .logo {
@@ -94,6 +100,26 @@ html:{
   line-height: 100%;
   display: flex;
   font-family: Bebas Neue;
+}
+
+@media (max-width: 1023px) {
+  .scroller {
+    height: 54px;
+    padding: 7px 0;
+    margin-top: -8px;
+    opacity: 0.7;
+  }
+
+  .scroller-inner {
+    gap: 30px;
+    padding: 6px 0;
+  }
+
+  .scroller-inner span {
+    font-size: 24px;
+    height: 36px;
+    width: auto;
+  }
 }
 
 
