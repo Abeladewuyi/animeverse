@@ -76,10 +76,10 @@ const styles = {
     minHeight: "100vh",
     backgroundColor: "black", 
     backgroundImage: `url(${isDesktop ? lightDesktop:lightMobile})`,
-    backgroundPosition: "top center",
+    backgroundPosition: isDesktop ? "top center" : "center -36px",
     backgroundRepeat: "no-repeat",
     // 3. Keep it at the top so it doesn't stretch to the bottom
-    backgroundSize: isDesktop ? "1600px" : "430px auto",
+    backgroundSize: isDesktop ? "1600px" : "620px auto",
     position: "relative",
     overflowX: "hidden",
 
@@ -128,8 +128,8 @@ const styles = {
   },
   
   logo: { 
-    height: isDesktop ? "41px" : "26px",
-    width: isDesktop ? "auto" : "99px",
+    height: isDesktop ? "41px" : "21.521484375px",
+    width: isDesktop ? "auto" : "82.32264709472656px",
     marginTop: isDesktop ? "42px" : "0px",
     top: isDesktop ? "auto" : "65.2px",
     left: isDesktop ? "auto" : "19.5px",
@@ -227,19 +227,18 @@ heroWrapper: {
     colour:"#FFFFFF",
   },
   heroP: {
-    fontSize: isDesktop ? "18px":"12px",
-    fontWeight:700,
+    fontSize: isDesktop ? "18px" : "12px",
+    fontWeight: 700,
     color: "#FFFFFFCC",
     lineHeight: "100%",
-    fontFamily:"Plus Jakarta Sans",
-    letterSpacing:"2%",
+    fontFamily: isDesktop ? "Plus Jakarta Sans, sans-serif" : '"Satoshi Variable", Satoshi, sans-serif',
+    letterSpacing: isDesktop ? "2%" : "-0.03em",
+    textAlign: isDesktop ? "left" : "center",
     marginBottom: "16px",
     maxWidth: isDesktop ? "none" : "300px",
-    margin: isDesktop ? "-15px auto 28px" : "0 auto 14px",
+    margin: isDesktop ? "-15px auto 28px" : "-6px auto 14px",
     width: isDesktop ? "700px" : "auto",
-    display:"inline-block"
-    
-    
+    display: isDesktop ? "inline-block" : "block",
   },
 heroRight: {
   position: "relative",
@@ -267,17 +266,29 @@ collageFade: {
   `,
   zIndex: 2,
 },
-collageFadeMobile: {
+collageFadeTopBlur: {
   position: "absolute",
-  inset: 0,
+  top: "4px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: "450px",
+  height: "95px",
   pointerEvents: "none",
-  background: `linear-gradient(
-    to bottom,
-    rgba(0,0,0,1) 0%,
-    rgba(0,0,0,0) 25%,
-    rgba(0,0,0,0) 75%,
-    rgba(0,0,0,1) 100%
-  )`,
+  zIndex: 2,
+  background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%)",
+  filter: "blur(22px)",
+},
+collageFadeBottomBlur: {
+  position: "absolute",
+  top: "194px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: "450px",
+  height: "95px",
+  pointerEvents: "none",
+  zIndex: 2,
+  background: "linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%)",
+  filter: "blur(22px)",
 },
 
 heroCollageImg: {
@@ -293,6 +304,12 @@ heroCollageImg: {
   transform: isDesktop ? "translateX(120px)" : "translateX(-50%)",
   opacity: 1,
   borderRadius: isDesktop ? "0px" : "6px",
+  WebkitMaskImage: isDesktop
+    ? "none"
+    : "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
+  maskImage: isDesktop
+    ? "none"
+    : "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
 },
   // --- MARQUEE ---
 
@@ -317,13 +334,17 @@ streamImg:{
     maxWidth: isDesktop ? "700px" : "330px"
   },
   features:{
-    color:"#FFFFFF",
-    fontSize: isDesktop ? "40px" : "40px",
-    fontWeight:600,
-    fontFamily:"Plus Jakarta Sans",
-    textAlign:"center",
-    letterSpacing:"-3%",
     marginTop: isDesktop ? "120px" : "24px",
+  },
+  featuresTitle: {
+    color: "#FFFFFF",
+    fontFamily: "Plus Jakarta Sans, sans-serif",
+    fontWeight: 600,
+    fontSize: isDesktop ? "40px" : "30px",
+    lineHeight: isDesktop ? "1.2" : "100%",
+    letterSpacing: isDesktop ? "-3%" : "-0.03em",
+    textAlign: "center",
+    margin: 0,
   },
 
   featuresRow:{
@@ -345,14 +366,20 @@ streamImg:{
 
   // --- COMMUNITY FEED ---
  feedPost: {
-  backgroundColor: "#111",
-  padding: "16px",
+  backgroundColor: isDesktop ? "#111" : "rgba(10, 10, 10, 0.88)",
+  padding: isDesktop ? "16px" : "10px",
   borderRadius: "16px",
   display: "flex",
   flexDirection: "column",
-  gap: "12px",
-  maxWidth: isDesktop ? "520px" : "340px",
-  left:"100px"
+  gap: isDesktop ? "12px" : "8px",
+  maxWidth: isDesktop ? "520px" : "325.9326171875px",
+  width: isDesktop ? "auto" : "325.9326171875px",
+  height: isDesktop ? "auto" : "245.4364776611328px",
+  opacity: 1,
+  left: isDesktop ? "100px" : "auto",
+  margin: isDesktop ? "0" : "0 auto",
+  boxSizing: "border-box",
+  overflow: isDesktop ? "visible" : "hidden",
 },
 
 feedGrid: {
@@ -367,6 +394,8 @@ feedMobile: {
   display: "flex",
   flexDirection: "column",
   gap: "10px",
+  alignItems: "center",
+  width: "100%",
 },
 
 feedColumn: {
@@ -387,18 +416,19 @@ postUser: {
 },
 
 postAvatar: {
-  width: "40px",
-  height: "40px",
+  width: isDesktop ? "40px" : "28px",
+  height: isDesktop ? "40px" : "28px",
   borderRadius: "50%",
 },
 
 postUsername: {
   fontWeight: "bold",
   color: "#fff",
+  fontSize: isDesktop ? "16px" : "11px",
 },
 
 postHandle: {
-  fontSize: "12px",
+  fontSize: isDesktop ? "12px" : "9px",
   color: "#888",
 },
 
@@ -407,35 +437,43 @@ followBtn: {
   color: "#000",
   border: "none",
   borderRadius: "999px",
-  padding: "6px 14px",
+  padding: isDesktop ? "6px 14px" : "4px 10px",
+  fontSize: isDesktop ? "14px" : "9px",
   cursor: "pointer",
 },
 
 postText: {
   color: "#aaa",
-  fontSize: "14px",
-  lineHeight: "1.5",
+  fontSize: isDesktop ? "14px" : "10px",
+  lineHeight: isDesktop ? "1.5" : "1.3",
+  margin: 0,
+  overflow: isDesktop ? "visible" : "hidden",
 },
 
 postImageWrapper: {
   width: "100%",
+  flex: isDesktop ? "0 0 auto" : "1 1 auto",
+  minHeight: isDesktop ? "auto" : 0,
 },
 postImg: {
   width: "100%",
-  height: "300px",
+  height: isDesktop ? "300px" : "100%",
   objectFit: "cover",
-  borderRadius: "16px",
+  borderRadius: isDesktop ? "16px" : "10px",
 },
 
 videoThumb: {
   position: "relative",
+  width: "100%",
+  flex: isDesktop ? "0 0 auto" : "1 1 auto",
+  minHeight: isDesktop ? "auto" : 0,
 },
 
 videoThumbImg: {
   width: "100%",
-  height: "300px",
+  height: isDesktop ? "300px" : "100%",
   objectFit: "cover",
-  borderRadius: "16px",
+  borderRadius: isDesktop ? "16px" : "10px",
 },
 
 
@@ -449,8 +487,25 @@ playOverlay: {
 },
 shareImageWrap:{
   display:"flex",
-  justifyContent:"center",
-  marginBottom:"50px",
+  justifyContent: isDesktop ? "center" : "flex-start",
+  marginBottom: isDesktop ? "50px" : "60px",
+  width: "100%",
+  paddingLeft: isDesktop ? "0" : "35.38px",
+  boxSizing: "border-box",
+},
+streamImageWrap: {
+  display: "flex",
+  justifyContent: isDesktop ? "center" : "flex-start",
+  textAlign: "center",
+  marginBottom: isDesktop ? "60px" : "24px",
+  width: "100%",
+  paddingLeft: isDesktop ? "0" : "42.2px",
+  boxSizing: "border-box",
+},
+streamImage: {
+  width: isDesktop ? 370 : "310.030517578125px",
+  height: isDesktop ? "69px" : "49.94005584716797px",
+  opacity: 1,
 },
   // --- FOOTER ---
   footer:{
@@ -465,11 +520,15 @@ shareImageWrap:{
   footerCta: { padding: "120px 0 60px", textAlign: "center" },
   footerH2: { 
     fontWeight: 600,
-     marginTop: "0px",
-     color:"#ffffff",
-     fontSize: isDesktop ? "56px" : "48px",
-     fontFamily:"Plus Jakarta Sans"
-     },
+    marginTop: "0px",
+    color: "#ffffff",
+    fontSize: isDesktop ? "56px" : "30px",
+    fontFamily: "Plus Jakarta Sans, sans-serif",
+    lineHeight: isDesktop ? "1.2" : "100%",
+    letterSpacing: isDesktop ? "normal" : "-0.03em",
+    textAlign: "center",
+    margin: 0,
+  },
      footerP:{
       color:"rgba(255,255,255,0.7",
       fontSize: isDesktop ? "18px" : "13px",
@@ -477,38 +536,49 @@ shareImageWrap:{
       marginTop:"18px",
       marginBottom:"26px"
      },
-  footerLogoImg: { width: "100%", maxWidth: isDesktop ? "1800px" : "360px", opacity:0.23, marginTop: "10px" },
+  footerLogoImg: {
+    width: isDesktop ? "100%" : "415px",
+    height: isDesktop ? "auto" : "121px",
+    maxWidth: isDesktop ? "1800px" : "415px",
+    opacity: 0.23,
+    marginTop: isDesktop ? "10px" : "0",
+    objectFit: "contain",
+  },
   logoWrap:{
-    marginTop:"50px",
+    marginTop: isDesktop ? "50px" : "0",
     display:"flex",
-    justifyContent:"center",
-    marginBottom:"-80px"
+    justifyContent: isDesktop ? "center" : "flex-start",
+    marginBottom:"-80px",
+    width: "100%",
+    marginLeft: isDesktop ? "0" : "-16.47px",
+    boxSizing: "border-box",
+    overflow: isDesktop ? "visible" : "visible",
   },
 
 
   // --- REUSABLE COMPONENTS ---
 
-  badge: {marginBottom:"-48px",
-    marginTop: isDesktop ? "60px" : "20px",
+  badge: {marginBottom: isDesktop ? "48px" : "-6px",
+    marginTop: isDesktop ? "60px" : "50px",
     display:"flex",
  },
  badgeimg:{
-  height:isDesktop ? "66px": "67px",
-  width:isDesktop ? "306px" : "216px",
+  height:isDesktop ? "66px": "40.5482292175293px",
+  width:isDesktop ? "306px" : "174.00830078125px",
   display:"block",
-  marginBottom:"10px",
+  marginBottom: isDesktop ? "40px" : "0px",
  },
  h2:{
-  fontFamily:"poppins",
-  fontWeight:500,
-  fontSize:isDesktop ? "56px" : "40px",
+  fontFamily: isDesktop ? "poppins" : "Poppins, sans-serif",
+  fontWeight: 500,
+  fontSize: isDesktop ? "56px" : "30px",
   color:"#FFFFFF",
-  letterSpacing: "0.5px",
-  marginTop: "8px",
-  marginBottom:"10px",
-  maxWidth:isDesktop ? "none" : "360px",
-  lineHeight: isDesktop ? 1 : 1.08,
-  whiteSpace: isDesktop ? "nowrap" : "normal"
+  letterSpacing: isDesktop ? "0.5px" : "-0.03em",
+  marginTop: isDesktop ? "8px" : "0px",
+  marginBottom: isDesktop ? "10px" : "4px",
+  maxWidth:isDesktop ? "none" : "none",
+  lineHeight: isDesktop ? 1 : "100%",
+  whiteSpace: "nowrap"
  },
 
   ctaGroup: { display: "flex", flexDirection: "row", gap: isDesktop ? "10px" : "8px", justifyContent: "center" },
@@ -543,13 +613,25 @@ shareImageWrap:{
     boxShadow: "inset 0 4px 20px rgba(255,255,255,0.25)"
   },
   shareImage:{
-    width:isDesktop ? "570px" : "230px",
-    height:isDesktop ? "115px" : "46px",
-    textAlignt:"center"
+    width: isDesktop ? "570px" : "323.67919921875px",
+    height: isDesktop ? "115px" : "71.05030822753906px",
+    opacity: 1,
+    textAlignt:"center",
   },
-  statBanner: { order:isDesktop ? "unset": 3,
-     marginTop: isDesktop ? "20px" : "12px",display:"flex",justifyContent: isDesktop ? "flex-start" : "center",
+  statBanner: {
+     marginTop: isDesktop ? "20px" : "12px",
+     display:"flex",
+     justifyContent: isDesktop ? "flex-start" : "center",
    },
+  statBannerAfterCollage: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    marginTop: "-8px",
+    marginBottom: "8px",
+    position: "relative",
+    zIndex: 3,
+  },
   statImg: { 
     width: isDesktop ? "180px" : "124.603759765625px",
     height: isDesktop ? "auto" : "60.99849319458008px",
@@ -562,15 +644,23 @@ shareImageWrap:{
   socialRow: {
      display: "flex",
      justifyContent: "center",
-     gap: "20px",
-     marginTop: "25px"
+     alignItems: "center",
+     gap: isDesktop ? "20px" : "12px",
+     width: isDesktop ? "auto" : "115px",
+     height: isDesktop ? "auto" : "30px",
+     marginTop: "25px",
+     marginBottom: isDesktop ? "0" : "10px",
+     marginLeft: isDesktop ? "auto" : "auto",
+     marginRight: "auto",
+     opacity: 1,
    },
   socialIcon: { 
-    width: isDesktop ? "68px" : "48px",
-    height: isDesktop ? "68px" : "48px", 
-    opacity: 0.8,
+    width: isDesktop ? "68px" : "30px",
+    height: isDesktop ? "68px" : "30px", 
+    opacity: isDesktop ? 0.8 : 1,
     cursor: "pointer",
     transition: "transform 0.2s ease",
+    objectFit: "contain",
   },
 
 footerWrapper: {
@@ -654,22 +744,36 @@ rightCharacter: {
       <button style={styles.btnGhost}>Visit Community</button>
     </div>
 
-    <div style={styles.statBanner}>
-      <img src={statBadge} alt="12M+ Users" style={styles.statImg}/>
-    </div>
+    {isDesktop && (
+      <div style={styles.statBanner}>
+        <img src={statBadge} alt="12M+ Users" style={styles.statImg}/>
+      </div>
+    )}
 
   </div>
 
   {/* RIGHT SIDE (MOVE THIS OUT) */}
   <div style={styles.heroRight}>
-    <div style={isDesktop ? styles.collageFade : styles.collageFadeMobile} />
-    
     <img
       src={isDesktop ? heroCollageDesktop : heroCollageMobile}
       alt="Anime collage"
       style={styles.heroCollageImg}
     />
+    {isDesktop ? (
+      <div style={styles.collageFade} />
+    ) : (
+      <>
+        <div style={styles.collageFadeTopBlur} />
+        <div style={styles.collageFadeBottomBlur} />
+      </>
+    )}
   </div>
+
+  {!isDesktop && (
+    <div style={styles.statBannerAfterCollage}>
+      <img src={statBadge} alt="12M+ Users" style={styles.statImg}/>
+    </div>
+  )}
 
 </section>
 
@@ -687,12 +791,22 @@ rightCharacter: {
 
         {/* FEATURES */}
         <section style={styles.features}>
-           <h2>Everything You Need in One Multiverse</h2>
+           <h2 style={styles.featuresTitle}>Everything You Need in One Multiverse</h2>
                   <p style={styles.sectionSub}>
           Animeverse isn't just a player; it's a living, breathing community. Build your profile,
           showcase your "All-Time Top 10," and follow creators who share your taste.
         </p>
 </section>
+
+          {!isDesktop && (
+            <div style={styles.streamImageWrap}>
+              <img
+                src={streamImg}
+                alt="Stream your favourite series"
+                style={styles.streamImage}
+              />
+            </div>
+          )}
 
            {/* Your cards can now be wrapped in a flex container */}
   <div style={isDesktop ? styles.featuresRow : styles.featuresColumn}>
@@ -713,16 +827,20 @@ rightCharacter: {
   </div>
 
 </div>
-          <div style={{ textAlign: "center", marginBottom: 60 }}>
-  <img
-    src={streamImg}
-    alt="Stream your favourite series"
-    style={{
-      width: isDesktop ? 370 : 260,
-      height: isDesktop ? "69px" : "49px",
-    }}
-  />
-</div>
+
+          {isDesktop ? (
+            <div style={styles.streamImageWrap}>
+              <img
+                src={streamImg}
+                alt="Stream your favourite series"
+                style={styles.streamImage}
+              />
+            </div>
+          ) : (
+            <div style={styles.shareImageWrap}>
+              <img src={shareSection} alt="Share section" style={styles.shareImage} />
+            </div>
+          )}
 
         {/* FEED */}
      <section style={styles.feed}>
@@ -823,9 +941,11 @@ rightCharacter: {
      {(isDesktop && <img src={leftCharacter} style={styles.leftCharacter} />)}
      {(isDesktop && <img src={rightCharacter} style={styles.rightCharacter} />)}
       <footer style={styles.footer}>
-         <div style={styles.shareImageWrap}> 
-          <img src={shareSection} alt="Share section" style={styles.shareImage}/>
-        </div>
+         {isDesktop && (
+           <div style={styles.shareImageWrap}>
+             <img src={shareSection} alt="Share section" style={styles.shareImage} />
+           </div>
+         )}
            <h2 style={styles.footerH2}>What are you waiting for?<br />Join now, it's free!</h2>
         <p style={styles.footerP}>
           Animeverse is the ultimate destination for the modern fan. Watch, react, and connect

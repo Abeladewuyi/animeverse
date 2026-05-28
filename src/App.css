@@ -67,11 +67,11 @@ html{
   overflow: hidden;
   width: 100%;
   background:#191919;
-  padding: 10px 0;
+  padding: 8.5px 0;
   transform: rotate(1.97deg);
   white-space:nowrap;
   position: relative;
-  height: 68px;
+  height: 57.8px;
   width: calc(100% + 180px);
   margin-top:20px;
   z-index: 2;
@@ -82,19 +82,19 @@ html{
 
 .scroller-inner {
   display: flex;
-  gap: 48px;
+  gap: 40.8px;
   width: max-content;
   animation: scroll 15s linear infinite;
   align-items: center;
-  padding: 10px 0;
+  padding: 8.5px 0;
 }
 
 .scroller-inner span {
   color: #FFFFFFAD;
   font-weight: 400;
-  font-size:30px;
-  width: 77px;
-  height: 48px;
+  font-size: 25.5px;
+  width: 65.45px;
+  height: 40.8px;
   justify-content: center;
   letter-spacing: 0;
   line-height: 100%;
@@ -103,21 +103,31 @@ html{
 }
 
 @media (max-width: 1023px) {
+  .postStats {
+    gap: 14px;
+    margin-top: 6px;
+  }
+
+  .statItem {
+    font-size: 10px;
+    gap: 4px;
+  }
+
   .scroller {
-    height: 54px;
-    padding: 7px 0;
+    height: 45.9px;
+    padding: 5.95px 0;
     margin-top: -8px;
     opacity: 0.7;
   }
 
   .scroller-inner {
-    gap: 30px;
-    padding: 6px 0;
+    gap: 25.5px;
+    padding: 5.1px 0;
   }
 
   .scroller-inner span {
-    font-size: 24px;
-    height: 36px;
+    font-size: 20.4px;
+    height: 30.6px;
     width: auto;
   }
 }
