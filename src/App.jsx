@@ -325,6 +325,7 @@ streamImg:{
     textAlign:"center",
     letterSpacing:"-3%",
     marginTop: "120px",
+    maxWidth: isDesktop ? "none" : "500px",
   },
 
   featuresRow:{
