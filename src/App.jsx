@@ -315,11 +315,11 @@ streamImg:{
     maxWidth: "700px",
     margin: "25px auto 50px",
     lineHeight: 1.6,
-    fontSize:"18px"
+    fontSize: isDesktop ? "18px" :"12px"
   },
   features:{
     color:"#FFFFFF",
-    fontSize:"40px",
+    fontSize:"30px",
     fontWeight:600,
     fontFamily:"Plus Jakarta Sans",
     textAlign:"center",
