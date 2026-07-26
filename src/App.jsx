@@ -44,12 +44,14 @@ export default function App() {
 const navRef = useRef(null);
 const [indicatorStyle, setIndicatorStyle] = useState({});
 const handleMove = (e) => {
+  if (!navRef.current) return;
   const rect = e.currentTarget.getBoundingClientRect();
   const parentRect = navRef.current.getBoundingClientRect();
 
   setIndicatorStyle({
-    width: rect.width + "px",
-    height: rect.height + "px",
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+    top: `${rect.top - parentRect.top}px`,
     transform: `translateX(${rect.left - parentRect.left}px)`,
   });
 };
@@ -76,10 +78,10 @@ const styles = {
     minHeight: "100vh",
     backgroundColor: "black", 
     backgroundImage: `url(${isDesktop ? lightDesktop:lightMobile})`,
-    backgroundPosition: isDesktop ? "top center" : "center -36px",
+    backgroundPosition: "top center",
     backgroundRepeat: "no-repeat",
     // 3. Keep it at the top so it doesn't stretch to the bottom
-    backgroundSize: isDesktop ? "1600px" : "620px auto",
+    backgroundSize:"1600px", 
     position: "relative",
     overflowX: "hidden",
 
@@ -109,7 +111,7 @@ const styles = {
   pageContainer: {
     maxWidth: "1500px",
     margin: "0 ",
-    padding: isDesktop ? "0 40px" : "0 14px",
+    padding: isDesktop ? "0 40px" : "0 20px",
     position: "relative",
     zIndex: 2, // Keeps content above floating characters,
     width:"100%"
@@ -123,13 +125,13 @@ const styles = {
     padding: "20px 0",
     top:"0px",
     zIndex:10,
-    width: isDesktop ? "529px" : "100%"
+    width:"529px"
     
   },
   
   logo: { 
-    height: isDesktop ? "41px" : "21.521484375px",
-    width: isDesktop ? "auto" : "82.32264709472656px",
+    height: isDesktop ? "41px" : "26px",
+    width: isDesktop ? "auto" : "99px",
     marginTop: isDesktop ? "42px" : "0px",
     top: isDesktop ? "auto" : "65.2px",
     left: isDesktop ? "auto" : "19.5px",
@@ -156,23 +158,26 @@ navIndicator: {
   transition: "all 0.3s ease",
   zIndex: 0,
 },
-  navMenu: {
-    display: "flex",
-    alignItems:"center",
-    borderRadius:"999px",
-    color:"#FFFFFF38",
-    gap:"28px",
-    width:"529px",
-    border:"1px solid rgba(255,255,255,0.3)",
-    backdropFilter:"blur(12px)",
-    padding:"21px 43px",
-    position:"absolute",
-    top:"42px",
-    left:"50%",
-    transform:"translateX(-50%)",
-    zIndex:10,
-    marginLeft:"79px"
-  },
+navMenu: {
+  display: "flex",
+  alignItems: "center",
+  borderRadius: "999px",
+  color: "#FFFFFF38",
+  gap: "28px",
+  width: "529px",
+  background: "rgba(10,10,12,0.55)",
+  border: "1px solid rgba(255,255,255,0.12)",
+  backdropFilter: "blur(16px)",
+  WebkitBackdropFilter: "blur(16px)",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
+  padding: "21px 43px",
+  position: "absolute",
+  top: "42px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 10,
+  marginLeft: "79px"
+},
   navLink: { color: "#fff", fontSize: "20px", cursor: "pointer", fontWeight: "500", fontFamily:"Plus Jakarta Sans",
     padding:"10px 16px",letterSpacing:"-5%"
   },
@@ -194,8 +199,8 @@ heroWrapper: {
   flexDirection: isDesktop ? "row" : "column", 
   alignItems: "center",
   justifyContent: "space-between",
-  gap: isDesktop ? "60px" : "18px",
-  marginTop: isDesktop ? "-110px" : "32px",
+  gap: isDesktop ? "60px" : "30px",
+  marginTop: isDesktop ? "-110px" : "40px",
 },
  heroLeftDesktop: {
   display: "flex",
@@ -211,10 +216,8 @@ heroWrapper: {
   flexDirection: "column",
   alignItems: "center",   // center everything
   textAlign: "center",
-  padding: "0 10px",
-  gap: "10px",
-  position: "relative",
-  zIndex: 3,
+  padding: "0 16px",      // side spacing
+  gap: "16px",            // consistent spacing
 },
 
   h1: {
@@ -227,27 +230,27 @@ heroWrapper: {
     colour:"#FFFFFF",
   },
   heroP: {
-    fontSize: isDesktop ? "18px" : "12px",
-    fontWeight: 700,
+    fontSize: isDesktop ? "18px":"12px",
+    fontWeight:700,
     color: "#FFFFFFCC",
     lineHeight: "100%",
-    fontFamily: isDesktop ? "Plus Jakarta Sans, sans-serif" : '"Satoshi Variable", Satoshi, sans-serif',
-    letterSpacing: isDesktop ? "2%" : "-0.03em",
-    textAlign: isDesktop ? "left" : "center",
-    marginBottom: "16px",
+    fontFamily:"Plus Jakarta Sans",
+    letterSpacing:"2%",
+    marginBottom: "30px",
     maxWidth: isDesktop ? "none" : "300px",
-    margin: isDesktop ? "-15px auto 28px" : "-6px auto 14px",
-    width: isDesktop ? "700px" : "auto",
-    display: isDesktop ? "inline-block" : "block",
+    margin: "-15px auto 28px", 
+    width:"700px",
+    display:"inline-block"
+    
+    
   },
 heroRight: {
   position: "relative",
-  width: isDesktop ? "50%" : "100%",
+  width: "50%",
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-start",
-  marginTop: isDesktop ? "100px" : "-6px",
-  minHeight: isDesktop ? "auto" : "290px",
+  marginTop: "100px", // 👈 THIS pushes it below navbar
 },
 collageFade: {
   position: "absolute",
@@ -266,50 +269,32 @@ collageFade: {
   `,
   zIndex: 2,
 },
-collageFadeTopBlur: {
+collageFadeMobile: {
   position: "absolute",
-  top: "4px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  width: "450px",
-  height: "95px",
+  inset: 0,
   pointerEvents: "none",
-  zIndex: 2,
-  background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%)",
-  filter: "blur(22px)",
-},
-collageFadeBottomBlur: {
-  position: "absolute",
-  top: "194px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  width: "450px",
-  height: "95px",
-  pointerEvents: "none",
-  zIndex: 2,
-  background: "linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%)",
-  filter: "blur(22px)",
+  background: `linear-gradient(
+    to bottom,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,0) 25%,
+    rgba(0,0,0,0) 75%,
+    rgba(0,0,0,1) 100%
+  )`,
 },
 
 heroCollageImg: {
   width: isDesktop ? "120%" : "450px",
-  height: isDesktop ? "auto" : "285px",
+  height: isDesktop ? "auto" : "450px",
   maxWidth: isDesktop ? "800px" : "none",
   objectFit: "cover",
   animation: "fadeUp 1s ease-out",
   position: isDesktop ? "relative" : "absolute",
-  top: isDesktop ? "auto" : "4px",
-  left: isDesktop ? "auto" : "50%",
+  top: isDesktop ? "auto" : "180px",
+  left: isDesktop ? "auto" : "-101.11px",
   zIndex: 1,
-  transform: isDesktop ? "translateX(120px)" : "translateX(-50%)",
+  transform: isDesktop ? "translateX(120px)" : "rotate(0deg)",
   opacity: 1,
   borderRadius: isDesktop ? "0px" : "6px",
-  WebkitMaskImage: isDesktop
-    ? "none"
-    : "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
-  maskImage: isDesktop
-    ? "none"
-    : "linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%)",
 },
   // --- MARQUEE ---
 
@@ -328,23 +313,18 @@ streamImg:{
     color: "#FFFFFFCC",
     textAlign: "center",
     maxWidth: "700px",
-    margin: isDesktop ? "25px auto 50px" : "16px auto 30px",
+    margin: "25px auto 50px",
     lineHeight: 1.6,
-    fontSize: isDesktop ? "18px" : "10px",
-    maxWidth: isDesktop ? "700px" : "330px"
+    fontSize:"18px"
   },
   features:{
-    marginTop: isDesktop ? "120px" : "24px",
-  },
-  featuresTitle: {
-    color: "#FFFFFF",
-    fontFamily: "Plus Jakarta Sans, sans-serif",
-    fontWeight: 600,
-    fontSize: isDesktop ? "40px" : "30px",
-    lineHeight: isDesktop ? "1.2" : "100%",
-    letterSpacing: isDesktop ? "-3%" : "-0.03em",
-    textAlign: "center",
-    margin: 0,
+    color:"#FFFFFF",
+    fontSize:"40px",
+    fontWeight:600,
+    fontFamily:"Plus Jakarta Sans",
+    textAlign:"center",
+    letterSpacing:"-3%",
+    marginTop: "120px",
   },
 
   featuresRow:{
@@ -362,46 +342,41 @@ streamImg:{
     gap: "25px",
     justifyContent: "center",
   },
-  featureCardImg: { width: "100%", maxWidth: isDesktop ? "360px" : "245px", borderRadius: "15px" },
+  featureCardImg: { width: "100%", maxWidth: isDesktop ? "360px" : "300px", borderRadius: "15px" },
 
   // --- COMMUNITY FEED ---
  feedPost: {
-  backgroundColor: isDesktop ? "#111" : "rgba(10, 10, 10, 0.88)",
-  padding: isDesktop ? "16px" : "10px",
+  backgroundColor: "#111",
+  padding: "16px",
   borderRadius: "16px",
   display: "flex",
   flexDirection: "column",
-  gap: isDesktop ? "12px" : "8px",
-  maxWidth: isDesktop ? "520px" : "325.9326171875px",
-  width: isDesktop ? "auto" : "325.9326171875px",
-  height: isDesktop ? "auto" : "245.4364776611328px",
-  opacity: 1,
-  left: isDesktop ? "100px" : "auto",
-  margin: isDesktop ? "0" : "0 auto",
-  boxSizing: "border-box",
-  overflow: isDesktop ? "visible" : "hidden",
+  gap: "12px",
+  width: "100%",
+  maxWidth: isDesktop ? "100%" : "520px",
+  left: "0",
 },
 
 feedGrid: {
   display: "flex",
-  gap: "10px",
-  justifyContent:"space-between",
-  alignItems:"flex-start",
-  width:"100%"
+  gap: isDesktop ? "20px" : "10px",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+  width: "100%",
+  flexWrap: "wrap",
 },
 
 feedMobile: {
   display: "flex",
   flexDirection: "column",
   gap: "10px",
-  alignItems: "center",
-  width: "100%",
 },
 
 feedColumn: {
   display: "flex",
   flexDirection: "column",
   gap: "10px",
+  width: isDesktop ? "48%" : "100%",
 },
 postHeader: {
   display: "flex",
@@ -416,19 +391,18 @@ postUser: {
 },
 
 postAvatar: {
-  width: isDesktop ? "40px" : "28px",
-  height: isDesktop ? "40px" : "28px",
+  width: "40px",
+  height: "40px",
   borderRadius: "50%",
 },
 
 postUsername: {
   fontWeight: "bold",
   color: "#fff",
-  fontSize: isDesktop ? "16px" : "11px",
 },
 
 postHandle: {
-  fontSize: isDesktop ? "12px" : "9px",
+  fontSize: "12px",
   color: "#888",
 },
 
@@ -437,43 +411,35 @@ followBtn: {
   color: "#000",
   border: "none",
   borderRadius: "999px",
-  padding: isDesktop ? "6px 14px" : "4px 10px",
-  fontSize: isDesktop ? "14px" : "9px",
+  padding: "6px 14px",
   cursor: "pointer",
 },
 
 postText: {
   color: "#aaa",
-  fontSize: isDesktop ? "14px" : "10px",
-  lineHeight: isDesktop ? "1.5" : "1.3",
-  margin: 0,
-  overflow: isDesktop ? "visible" : "hidden",
+  fontSize: "14px",
+  lineHeight: "1.5",
 },
 
 postImageWrapper: {
   width: "100%",
-  flex: isDesktop ? "0 0 auto" : "1 1 auto",
-  minHeight: isDesktop ? "auto" : 0,
 },
 postImg: {
   width: "100%",
-  height: isDesktop ? "300px" : "100%",
+  height: "300px",
   objectFit: "cover",
-  borderRadius: isDesktop ? "16px" : "10px",
+  borderRadius: "16px",
 },
 
 videoThumb: {
   position: "relative",
-  width: "100%",
-  flex: isDesktop ? "0 0 auto" : "1 1 auto",
-  minHeight: isDesktop ? "auto" : 0,
 },
 
 videoThumbImg: {
   width: "100%",
-  height: isDesktop ? "300px" : "100%",
+  height: "300px",
   objectFit: "cover",
-  borderRadius: isDesktop ? "16px" : "10px",
+  borderRadius: "16px",
 },
 
 
@@ -487,25 +453,10 @@ playOverlay: {
 },
 shareImageWrap:{
   display:"flex",
-  justifyContent: isDesktop ? "center" : "flex-start",
-  marginBottom: isDesktop ? "50px" : "60px",
-  width: "100%",
-  paddingLeft: isDesktop ? "0" : "35.38px",
-  boxSizing: "border-box",
-},
-streamImageWrap: {
-  display: "flex",
-  justifyContent: isDesktop ? "center" : "flex-start",
-  textAlign: "center",
-  marginBottom: isDesktop ? "60px" : "24px",
-  width: "100%",
-  paddingLeft: isDesktop ? "0" : "42.2px",
-  boxSizing: "border-box",
-},
-streamImage: {
-  width: isDesktop ? 370 : "310.030517578125px",
-  height: isDesktop ? "69px" : "49.94005584716797px",
-  opacity: 1,
+  justifyContent:"center",
+  marginBottom:"50px",
+  width: isDesktop ? "420px" : "260px",
+height: isDesktop ? "520px" : "340px",
 },
   // --- FOOTER ---
   footer:{
@@ -520,72 +471,62 @@ streamImage: {
   footerCta: { padding: "120px 0 60px", textAlign: "center" },
   footerH2: { 
     fontWeight: 600,
-    marginTop: "0px",
-    color: "#ffffff",
-    fontSize: isDesktop ? "56px" : "30px",
-    fontFamily: "Plus Jakarta Sans, sans-serif",
-    lineHeight: isDesktop ? "1.2" : "100%",
-    letterSpacing: isDesktop ? "normal" : "-0.03em",
-    textAlign: "center",
-    margin: 0,
-  },
+     marginTop: "-200px",
+     color:"#ffffff",
+     fontSize:"56px",
+     fontFamily:"Plus Jakarta Sans"
+     },
      footerP:{
       color:"rgba(255,255,255,0.7",
-      fontSize: isDesktop ? "18px" : "13px",
-      maxWidth: isDesktop ? "600px" : "330px",
-      marginTop:"18px",
-      marginBottom:"26px"
+      fontSize:"18px",
+      maxWidth:"600px",
+      marginTop:"24px",
+      marginBottom:"40px"
      },
-  footerLogoImg: {
-    width: isDesktop ? "100%" : "415px",
-    height: isDesktop ? "auto" : "121px",
-    maxWidth: isDesktop ? "1800px" : "415px",
-    opacity: 0.23,
-    marginTop: isDesktop ? "10px" : "0",
-    objectFit: "contain",
-  },
+  footerLogoImg: { width: isDesktop ? "120px" : "90px", maxWidth: "100%", height: "auto", opacity:0.23, marginTop: "10px" },
   logoWrap:{
-    marginTop: isDesktop ? "50px" : "0",
+    marginTop:"50px",
     display:"flex",
-    justifyContent: isDesktop ? "center" : "flex-start",
-    marginBottom:"-80px",
-    width: "100%",
-    marginLeft: isDesktop ? "0" : "-16.47px",
-    boxSizing: "border-box",
-    overflow: isDesktop ? "visible" : "visible",
+    justifyContent:"center",
+    marginBottom:"-80px"
   },
 
 
   // --- REUSABLE COMPONENTS ---
 
-  badge: {marginBottom: isDesktop ? "48px" : "-6px",
-    marginTop: isDesktop ? "60px" : "50px",
+  badge: {marginBottom:"-48px",
+    marginTop:"60px",
     display:"flex",
  },
+ shareSection:{
+  width: isDesktop ? "570px" : "300px",
+  height: isDesktop ? "115px" : "60px",
+  textAlign:"center",
+  marginBottom:"70px"
+ },
  badgeimg:{
-  height:isDesktop ? "66px": "40.5482292175293px",
-  width:isDesktop ? "306px" : "174.00830078125px",
+  height:isDesktop ? "66px": "67px",
+  width:"306px",
   display:"block",
-  marginBottom: isDesktop ? "40px" : "0px",
+  marginBottom:"10px",
  },
  h2:{
-  fontFamily: isDesktop ? "poppins" : "Poppins, sans-serif",
-  fontWeight: 500,
-  fontSize: isDesktop ? "56px" : "30px",
+  fontFamily:"poppins",
+  fontWeight:500,
+  fontSize:isDesktop ? "56px" : "30px",
   color:"#FFFFFF",
-  letterSpacing: isDesktop ? "0.5px" : "-0.03em",
-  marginTop: isDesktop ? "8px" : "0px",
-  marginBottom: isDesktop ? "10px" : "4px",
-  maxWidth:isDesktop ? "none" : "none",
-  lineHeight: isDesktop ? 1 : "100%",
+  letterSpacing: "0.5px",
+  marginTop: "20px",
+  marginBottom:"20px",
+  maxWidth:isDesktop ? "none" : "100%",
+  lineHeight: 1,
   whiteSpace: "nowrap"
  },
 
-  ctaGroup: { display: "flex", flexDirection: "row", gap: isDesktop ? "10px" : "8px", justifyContent: "center" },
+  ctaGroup: { display: "flex", flexDirection: isDesktop ? "row" : "row", gap: "10px" },
   btnPrimary: {
-    background: "#f0ede8", color: "#0a0a0c", padding: isDesktop ? "15px 30px" : "11px 16px",
+    background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
     borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
-    fontSize: isDesktop ? "16px" : "11px",
   },
   footerBtnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
@@ -599,13 +540,13 @@ streamImage: {
   btnGhost: {
     backgroundColor:"#0A0A0A", 
     color: "#fff", 
-    padding: isDesktop ? "10px 20px" : "10px 14px",
+    padding: "10px 20px",
     borderRadius: "999px", 
     display:"inline-flex",
     gap:"4px",
     border: "1px solid rgba(255, 255, 255, 0.08)", 
     boxShadow:"inset 0 4px 16px rgba(255, 255, 255, 0.15)",
-    fontSize: isDesktop ? "14px" : "11px",
+    fontSize:"14px",
     cursor: "pointer",
     alignItems:"center"
   },
@@ -613,54 +554,34 @@ streamImage: {
     boxShadow: "inset 0 4px 20px rgba(255,255,255,0.25)"
   },
   shareImage:{
-    width: isDesktop ? "570px" : "323.67919921875px",
-    height: isDesktop ? "115px" : "71.05030822753906px",
-    opacity: 1,
-    textAlignt:"center",
+    width:"570px",
+    height:"115px",
+    textAlignt:"center"
   },
-  statBanner: {
-     marginTop: isDesktop ? "20px" : "12px",
-     display:"flex",
-     justifyContent: isDesktop ? "flex-start" : "center",
+  statBanner: { order:isDesktop ? "unset": 3,
+     marginTop: "20px",display:"flex",justifyContent:"flex-start",
    },
-  statBannerAfterCollage: {
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
-    marginTop: "-8px",
-    marginBottom: "8px",
-    position: "relative",
-    zIndex: 3,
-  },
   statImg: { 
     width: isDesktop ? "180px" : "124.603759765625px",
     height: isDesktop ? "auto" : "60.99849319458008px",
     marginLeft: isDesktop ? "20px" : "0px",
-    top: "auto",
-    left: "auto",
-    position: "relative",
+    top: isDesktop ? "auto" : "666.16px",
+    left: isDesktop ? "auto" : "134.2px",
+    position: isDesktop ? "relative" : "absolute",
     opacity: 1,
    },
   socialRow: {
      display: "flex",
      justifyContent: "center",
-     alignItems: "center",
-     gap: isDesktop ? "20px" : "12px",
-     width: isDesktop ? "auto" : "115px",
-     height: isDesktop ? "auto" : "30px",
-     marginTop: "25px",
-     marginBottom: isDesktop ? "0" : "10px",
-     marginLeft: isDesktop ? "auto" : "auto",
-     marginRight: "auto",
-     opacity: 1,
+     gap: "20px",
+     marginTop: "25px"
    },
   socialIcon: { 
-    width: isDesktop ? "68px" : "30px",
-    height: isDesktop ? "68px" : "30px", 
-    opacity: isDesktop ? 0.8 : 1,
+    width: isDesktop ? "68px" : "48px",
+    height: isDesktop ? "68px" : "48px", 
+    opacity: 0.8,
     cursor: "pointer",
     transition: "transform 0.2s ease",
-    objectFit: "contain",
   },
 
 footerWrapper: {
@@ -687,26 +608,27 @@ rightCharacter: {
   width: "200px",
   height:"500px",
 },
-   
-}
+};
+
   return (
-    <div style={styles.app}>
+ <div style={styles.app}>
       <div style={styles.pageContainer}>
 
       {/* 1. HEADER / NAV */}
       <header style={styles.navbar}>
         <img src={logo} alt="Animeverse" style={styles.logo} />
         {isDesktop ? (
-         <nav style={styles.navMenu} ref={navRef}>
-  
+         <nav style={styles.navMenu} className="nav-menu" ref={navRef}>
+
   {/* MOVING BACKGROUND */}
-  <div style={{ ...styles.navIndicator, ...indicatorStyle }} />
+  <div style={{ ...styles.navIndicator, ...indicatorStyle }} className="nav-indicator" />
 
   {/* MENU ITEMS */}
-  {["Home", "About", "Community", "Socials", "Watch"].map((item) => (
+  {navItems.map((item) => (
     <div
       key={item}
       style={styles.navItem}
+      className="nav-link"
       onMouseEnter={handleMove}
     >
       {item}
@@ -753,29 +675,31 @@ rightCharacter: {
   </div>
 
   {/* RIGHT SIDE (MOVE THIS OUT) */}
-  <div style={styles.heroRight}>
-    <img
-      src={isDesktop ? heroCollageDesktop : heroCollageMobile}
-      alt="Anime collage"
-      style={styles.heroCollageImg}
-    />
-    {isDesktop ? (
+  {isDesktop ? (
+    <div style={styles.heroRight}>
       <div style={styles.collageFade} />
-    ) : (
-      <>
-        <div style={styles.collageFadeTopBlur} />
-        <div style={styles.collageFadeBottomBlur} />
-      </>
-    )}
-  </div>
-
-  {!isDesktop && (
-    <div style={styles.statBannerAfterCollage}>
-      <img src={statBadge} alt="12M+ Users" style={styles.statImg}/>
+      <img
+        src={heroCollageDesktop}
+        alt="Anime collage"
+        style={styles.heroCollageImg}
+      />
     </div>
-  )}
+  ) : null}
 
 </section>
+
+  {/* Mobile-only: place stat badge and hero collage before marquee */}
+  {!isDesktop && (
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginTop: -40, }}>
+      <div style={{...styles.statBanner, position: 'relative', zIndex: 20}}>
+        <img src={statBadge} alt="12M+ Users" style={{...styles.statImg, position: 'relative', top: 1000, left: 0, }}/>
+      </div>
+      <div style={{width: '100%', display: 'flex', justifyContent: 'center', position: 'relative'}}>
+        <div style={{...styles.collageFadeMobile,}} />
+        <img src={heroCollageMobile} alt="Anime collage" style={{...styles.heroCollageImg, position: 'relative', top: 1000, left: 0, width: '90%', height: 'auto',}} />
+      </div>
+    </div>
+  )}
 
         {/* MARQUEE */}
 <div className="scroller">
@@ -791,22 +715,12 @@ rightCharacter: {
 
         {/* FEATURES */}
         <section style={styles.features}>
-           <h2 style={styles.featuresTitle}>Everything You Need in One Multiverse</h2>
+           <h2>Everything You Need in One Multiverse</h2>
                   <p style={styles.sectionSub}>
           Animeverse isn't just a player; it's a living, breathing community. Build your profile,
           showcase your "All-Time Top 10," and follow creators who share your taste.
         </p>
 </section>
-
-          {!isDesktop && (
-            <div style={styles.streamImageWrap}>
-              <img
-                src={streamImg}
-                alt="Stream your favourite series"
-                style={styles.streamImage}
-              />
-            </div>
-          )}
 
            {/* Your cards can now be wrapped in a flex container */}
   <div style={isDesktop ? styles.featuresRow : styles.featuresColumn}>
@@ -827,20 +741,16 @@ rightCharacter: {
   </div>
 
 </div>
-
-          {isDesktop ? (
-            <div style={styles.streamImageWrap}>
-              <img
-                src={streamImg}
-                alt="Stream your favourite series"
-                style={styles.streamImage}
-              />
-            </div>
-          ) : (
-            <div style={styles.shareImageWrap}>
-              <img src={shareSection} alt="Share section" style={styles.shareImage} />
-            </div>
-          )}
+          <div style={{ textAlign: "center", marginBottom: 60 }}>
+  <img
+    src={streamImg}
+    alt="Stream your favourite series"
+    style={{
+      width: 370,
+      height: "69px",
+    }}
+  />
+</div>
 
         {/* FEED */}
      <section style={styles.feed}>
@@ -941,11 +851,9 @@ rightCharacter: {
      {(isDesktop && <img src={leftCharacter} style={styles.leftCharacter} />)}
      {(isDesktop && <img src={rightCharacter} style={styles.rightCharacter} />)}
       <footer style={styles.footer}>
-         {isDesktop && (
-           <div style={styles.shareImageWrap}>
-             <img src={shareSection} alt="Share section" style={styles.shareImage} />
-           </div>
-         )}
+         <div style={styles.shareImageWrap}> 
+          <img src={shareSection} alt="Share section" style={styles.shareImage}/>
+        </div>
            <h2 style={styles.footerH2}>What are you waiting for?<br />Join now, it's free!</h2>
         <p style={styles.footerP}>
           Animeverse is the ultimate destination for the modern fan. Watch, react, and connect
@@ -959,77 +867,11 @@ rightCharacter: {
   <img src={xIcon} alt="X" style={styles.socialIcon} />
 </div>
 <div style={styles.logoWrap}>
-  <img src={logo} alt="Animeverse" style={styles.footerLogoImg} />
+  <img src={logo} alt="Animeverse" style={styles.footerLogoImg} className="footer-logo-img" />
 </div>
       </footer>
       </div>
     </div>
      </div>
-     
   );
 }
-
-  <style>{`
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@300;400;600;700&display=swap');
-  
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0a0a0c; color: #fff; font-family: 'Sora', sans-serif; overflow-x: hidden; }
-
-  /* ANIMATIONS */
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes floatChar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-  }
-
-  /* Apply float to the anime characters */
-  img[style*="position: fixed"] {
-    animation: floatChar 5s ease-in-out infinite;
-  }
-
-  /* RESPONSIVE TYPOGRAPHY & HOVERS */
-  
-  /* Mobile Defaults */
-  .responsive-h1 { font-size: 38px !important; }
-  .responsive-h2 { font-size: 32px !important; }
-  .responsive-footer-h2 { font-size: 34px !important; }
-
-  /* Desktop Overrides (1024px +) */
-  @media (min-width: 1024px) {
-    .responsive-h1 { font-size: 72px !important; }
-    .responsive-h2 { font-size: 56px !important; }
-    .responsive-footer-h2 { font-size: 64px !important; }
-    
-    .card-hover:hover {
-      transform: translateY(-15px);
-      transition: transform 0.3s ease;
-    }
-
-    .feed-post-card:hover {
-      background: #1c1c21 !important;
-      border-color: rgba(255,255,255,0.2) !important;
-      transition: all 0.3s ease;
-    }
-  }
-
-  /* Custom scrollbar for horizontal feed on mobile */
-  div[style*="overflow-x: auto"]::-webkit-scrollbar {
-    display: none;
-  }
-    
-`}
-<style>{`
-@keyframes scroll {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-`}</style>
-</style>
