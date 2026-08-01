@@ -297,8 +297,8 @@ heroCollageImg: {
   // --- MARQUEE ---
 
 streamImg:{
-  width:"525px",
-  height:"80px",
+  width:"310px",
+  height:"49px",
   
 },
 
@@ -362,7 +362,7 @@ streamImg:{
   gap: "12px",
   width: "100%",
   maxWidth: isDesktop ? "100%" : "530px",
-  height: isDesktop ? "auto" : "320px",
+  height: isDesktop ? "100%" : "320px",
   left: "0",
   marginTop: isDesktop ? "0" : "20px",
   marginBottom: isDesktop ? "0" : "20px",
@@ -372,7 +372,7 @@ feedGrid: {
   display: "flex",
   gap: isDesktop ? "20px" : "10px",
   justifyContent: "space-between",
-  alignItems: "flex-start",
+  alignItems: isDesktop ? "stretch" : "flex-start",
   width: "100%",
   flexWrap: "wrap",
 },
@@ -388,6 +388,7 @@ feedColumn: {
   flexDirection: "column",
   gap: "10px",
   width: isDesktop ? "48%" : "100%",
+  alignItems: isDesktop ? "stretch" : "flex-start",
 },
 postHeader: {
   display: "flex",
@@ -493,13 +494,14 @@ height: isDesktop ? "520px" : "340px",
     fontWeight: 600,
     marginTop: isDesktop ? "-350px" : "-50px",
     color: "#ffffff",
-    fontSize: isDesktop ? "56px" : "30px",
+    fontSize: isDesktop ? "56px" : "28px",
     fontFamily: "Plus Jakarta Sans",
     fontStyle: "normal",
     lineHeight: "100%",
     letterSpacing: "-3%",
-    maxWidth: isDesktop ? "none" : "386px",
+    maxWidth: isDesktop ? "none" : "360px",
     width: isDesktop ? "none" : "100%",
+    whiteSpace: "normal",
   },
      footerP:{
       color:"rgba(255,255,255,0.7",
@@ -508,7 +510,9 @@ height: isDesktop ? "520px" : "340px",
       marginTop:isDesktop ? "24px" : "12px",
       marginBottom:"40px"
      },
-  footerLogoImg: { width: isDesktop ? "120px" : "90px", maxWidth: "100%", height: "auto", opacity:0.23, marginTop: "10px" },
+  footerLogoImg: { width: isDesktop ? "120px" : "415px", maxWidth: "100%", height: "auto", opacity: isDesktop ? 0.23 : 0.23, marginTop: "10px" ,
+    size:"100px"
+  },
   logoWrap:{
     marginTop:"50px",
     display:"flex",
@@ -622,13 +626,13 @@ height: isDesktop ? "520px" : "340px",
   socialRow: {
      display: "flex",
      justifyContent: "center",
-     gap: "20px",
-     marginTop: "25px"
+     gap: "12px",
+     marginTop: "25px",
+     marginBottom: isDesktop ? "0px" : "-80px"
    },
   socialIcon: { 
-    width: isDesktop ? "68px" : "48px",
-    height: isDesktop ? "68px" : "48px", 
-    opacity: 0.8,
+    width: isDesktop ? "68px" : "30px",
+    height: isDesktop ? "68px" : "30px", 
     cursor: "pointer",
     transition: "transform 0.2s ease",
   },
@@ -800,8 +804,8 @@ rightCharacter: {
       src={streamImg}
       alt="Stream your favourite series"
       style={{
-        width: 370,
-        height: "69px",
+        width: 310,
+        height: "50px",
       }}
     />
   </div>
@@ -970,7 +974,7 @@ rightCharacter: {
             <img src={shareSection} alt="Share section" style={styles.shareImage}/>
           </div>
          )}
-           <h2 style={styles.footerH2}>What are you waiting for?<br />Join now, it's free!</h2>
+           <h2 style={styles.footerH2}>What are you waiting for? Join now, it's free!</h2>
         <p style={styles.footerP}>
           Animeverse is the ultimate destination for the modern fan. Watch, react, and connect
           in a world built by otakus, for otakus.
