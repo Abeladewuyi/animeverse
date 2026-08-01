@@ -354,15 +354,18 @@ streamImg:{
 
   // --- COMMUNITY FEED ---
  feedPost: {
-  backgroundColor: "#111",
+  backgroundColor: "#0A0A0A",
   padding: "16px",
   borderRadius: "16px",
   display: "flex",
   flexDirection: "column",
   gap: "12px",
   width: "100%",
-  maxWidth: isDesktop ? "100%" : "520px",
+  maxWidth: isDesktop ? "100%" : "530px",
+  height: isDesktop ? "auto" : "320px",
   left: "0",
+  marginTop: isDesktop ? "0" : "20px",
+  marginBottom: isDesktop ? "0" : "20px",
 },
 
 feedGrid: {
@@ -399,14 +402,18 @@ postUser: {
 },
 
 postAvatar: {
-  width: "40px",
-  height: "40px",
+  width: isDesktop ? "40px" : "20px",
+  height: isDesktop ? "40px" : "20px",
   borderRadius: "50%",
+  marginTop: isDesktop ? "8px":"-20px",
 },
 
 postUsername: {
   fontWeight: "bold",
   color: "#fff",
+  fontSize: isDesktop ? "16px" : "12px",
+  marginTop: isDesktop ? "8px" : "-10px",
+  paddingLeft: isDesktop ? "none" : "-100px"
 },
 
 postHandle: {
@@ -421,12 +428,15 @@ followBtn: {
   borderRadius: "999px",
   padding: "6px 14px",
   cursor: "pointer",
+  size: isDesktop ? "14px" : "10px",
 },
 
 postText: {
   color: "#aaa",
-  fontSize: "14px",
+  fontSize: isDesktop ? "14px" : "12px",
   lineHeight: "1.5",
+  maxWidth: isDesktop ? "none" : "100%",
+  marginTop: isDesktop ? "0" : "-10px",
 },
 
 postImageWrapper: {
@@ -434,9 +444,10 @@ postImageWrapper: {
 },
 postImg: {
   width: "100%",
-  height: "300px",
+  height: "100%",
   objectFit: "cover",
   borderRadius: "16px",
+
 },
 
 videoThumb: {
@@ -445,9 +456,10 @@ videoThumb: {
 
 videoThumbImg: {
   width: "100%",
-  height: "300px",
+  height: "100%",
   objectFit: "cover",
   borderRadius: "16px",
+
 },
 
 
@@ -479,21 +491,21 @@ height: isDesktop ? "520px" : "340px",
   footerCta: { padding: "120px 0 60px", textAlign: "center" },
   footerH2: { 
     fontWeight: 600,
-    marginTop: isDesktop ? "-200px" : "0px",
+    marginTop: isDesktop ? "-350px" : "-50px",
     color: "#ffffff",
     fontSize: isDesktop ? "56px" : "30px",
     fontFamily: "Plus Jakarta Sans",
     fontStyle: "normal",
-    leadingTrim: "none",
     lineHeight: "100%",
-    letterSpacing: "-0.03em",
-    textAlign: "center",
+    letterSpacing: "-3%",
+    maxWidth: isDesktop ? "none" : "386px",
+    width: isDesktop ? "none" : "100%",
   },
      footerP:{
       color:"rgba(255,255,255,0.7",
-      fontSize:"18px",
-      maxWidth:"600px",
-      marginTop:"24px",
+      fontSize:isDesktop ? "18px":"12px",
+      maxWidth:isDesktop ? "600px":"297px",
+      marginTop:isDesktop ? "24px" : "12px",
       marginBottom:"40px"
      },
   footerLogoImg: { width: isDesktop ? "120px" : "90px", maxWidth: "100%", height: "auto", opacity:0.23, marginTop: "10px" },
@@ -566,7 +578,7 @@ height: isDesktop ? "520px" : "340px",
   footerBtnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
     borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
-    marginTop: "30px"
+    marginTop: "0px"
   },
   btnPrimaryHover:{
     transform:"translateY(-2px)",
@@ -594,7 +606,6 @@ height: isDesktop ? "520px" : "340px",
     height: isDesktop ? "115px" : "71px",
     textAlignt:"center",
     marginBottom: isDesktop ? "none" : "24px",
-    marginTop: isDesktop ? "none" : "24px",
   },
   statBanner: { order:isDesktop ? "unset": 3,
      marginTop: "20px",display:"flex",justifyContent:"flex-start",
