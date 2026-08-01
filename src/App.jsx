@@ -84,6 +84,20 @@ const styles = {
     position: "relative",
     overflowX: "hidden",
   },
+  backgroundImage: isDesktop
+  ? `url(${lightDesktop})`
+  : `linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.82) 0%,
+      rgba(0, 0, 0, 0.9) 55%,
+      #000 100%
+    ), url(${lightMobile})`,
+
+backgroundPosition: "top center",
+backgroundRepeat: "no-repeat",
+backgroundSize: isDesktop
+  ? "1600px auto"
+  : "100% 560px, 100% auto",
   // Floating Characters (Desktop Only)
   floatingCharLeft: {
     position: "fixed",
@@ -243,18 +257,7 @@ collageFade: {
   position: "absolute",
   inset:0,
   pointerEvents: "none",
-  background: `
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,1) 0%,
-      rgba(0,0,0,0.8) 18%,
-      rgba(0,0,0,0.35) 32%,
-      rgba(0,0,0,0) 46%,
-      rgba(0,0,0,0) 66%,
-      rgba(0,0,0,0.45) 86%,
-      rgba(0,0,0,1) 100%
-    )
-  `,
+
   zIndex: 2,
 },
 collageFadeMobile: {
@@ -272,11 +275,13 @@ collageFadeMobile: {
     rgba(0,0,0,1) 100%
   )`,
   zIndex: 2,
+  marginTop:"-20px",
+  height:"430px",
 },
 
 heroCollageImg: {
   width: isDesktop ? "120%" : "90%",
-  height: isDesktop ? "auto" : "auto",
+  height: isDesktop ? "auto" : "420px",
   maxWidth: isDesktop ? "800px" : "360px",
   objectFit: "cover",
   animation: "fadeUp 1s ease-out",
@@ -305,20 +310,21 @@ streamImg:{
   sectionSub: {
     color: "#FFFFFFCC",
     textAlign: "center",
-    maxWidth: "700px",
-    margin: "25px auto 50px",
+    maxWidth:isDesktop ?"657px" : "297px",
+    margin: "15px auto 50px",
     lineHeight: 1.6,
+    letterSpacing:"-3%",
     fontSize: isDesktop ? "18px" :"12px"
   },
   features:{
     color:"#FFFFFF",
-    fontSize:"30px",
+    fontSize:isDesktop ? "30px": "20px",
     fontWeight:600,
     fontFamily:"Plus Jakarta Sans",
     textAlign:"center",
     letterSpacing:"-3%",
-    marginTop: "120px",
-    maxWidth: isDesktop ? "none" : "500px",
+    marginTop: "70px",
+    maxWidth: isDesktop ? "none" : "360px",
   },
 
   featuresRow:{
@@ -535,11 +541,11 @@ height: isDesktop ? "520px" : "340px",
     fontSize: isDesktop ? "18px":"12px",
     fontWeight:700,
     color: "#FFFFFFCC",
-    lineHeight: "100%",
+    lineHeight: "150%",
     fontFamily:"Plus Jakarta Sans",
     letterSpacing:"-3%",
     marginBottom: isDesktop ? "30px" : "10px",
-    maxWidth: isDesktop ? "none" : "306px",
+    maxWidth: isDesktop ? "none" : "336px",
     margin: isDesktop ? "-15px auto 28px" : "-20px auto 12px",
     width: isDesktop ? "700px" : "100%",
     display:"inline-block"
@@ -574,7 +580,8 @@ height: isDesktop ? "520px" : "340px",
     display:"inline-flex",
     gap:"4px",
     border: "1px solid rgba(255, 255, 255, 0.08)", 
-    boxShadow:"inset 0 4px 16px rgba(255, 255, 255, 0.15)",
+    boxShadow: "inset 0px 4px 8.7px 0px rgba(255, 255, 255, 0.14)",
+
     fontSize:"14px",
     cursor: "pointer",
     alignItems:"center"
@@ -583,9 +590,11 @@ height: isDesktop ? "520px" : "340px",
     boxShadow: "inset 0 4px 20px rgba(255,255,255,0.25)"
   },
   shareImage:{
-    width:"570px",
-    height:"115px",
-    textAlignt:"center"
+    width: isDesktop ? "570px" : "323px",
+    height: isDesktop ? "115px" : "71px",
+    textAlignt:"center",
+    marginBottom: isDesktop ? "none" : "24px",
+    marginTop: isDesktop ? "none" : "24px",
   },
   statBanner: { order:isDesktop ? "unset": 3,
      marginTop: "20px",display:"flex",justifyContent:"flex-start",
@@ -721,7 +730,7 @@ rightCharacter: {
   {!isDesktop && (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginTop: "8px", width: "100%", position: "relative" }}>
       <div style={{ position: "relative", width: "calc(100% + 40px)", marginLeft: "-20px", marginRight: "-20px", display: "flex", justifyContent: "center", marginTop: "-8px" }}>
-        <div style={{ ...styles.collageFadeMobile, inset: "0 0 0 0", width: "100%", height: "100%" }} />
+        <div style={{ ...styles.collageFadeMobile, width: "100%", }} />
         <img
           src={heroCollageMobile}
           alt="Anime collage"
@@ -729,7 +738,7 @@ rightCharacter: {
             ...styles.heroCollageImg,
             width: "100%",
             maxWidth: "100%",
-            height: "auto",
+            height: "400px",
             borderRadius: "6px",
             marginTop: "-12px",
             position: "relative",
@@ -774,6 +783,19 @@ rightCharacter: {
         </p>
 </section>
 
+{!isDesktop && (
+  <div style={{ textAlign: "center", marginBottom: 24 }}>
+    <img
+      src={streamImg}
+      alt="Stream your favourite series"
+      style={{
+        width: 370,
+        height: "69px",
+      }}
+    />
+  </div>
+)}
+
            {/* Your cards can now be wrapped in a flex container */}
   <div style={isDesktop ? styles.featuresRow : styles.featuresColumn}>
 
@@ -814,16 +836,24 @@ rightCharacter: {
   )}
 
 </div>
-          <div style={{ textAlign: "center", marginBottom: 60 }}>
-  <img
-    src={streamImg}
-    alt="Stream your favourite series"
-    style={{
-      width: 370,
-      height: "69px",
-    }}
-  />
-</div>
+{isDesktop && (
+  <div style={{ textAlign: "center", marginBottom: 60 }}>
+    <img
+      src={streamImg}
+      alt="Stream your favourite series"
+      style={{
+        width: 370,
+        height: "69px",
+      }}
+    />
+  </div>
+)}
+
+{!isDesktop && (
+  <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+    <img src={shareSection} alt="Share section" style={styles.shareImage} />
+  </div>
+)}
 
         {/* FEED */}
      <section style={styles.feed}>
@@ -924,9 +954,11 @@ rightCharacter: {
      {(isDesktop && <img src={leftCharacter} style={styles.leftCharacter} />)}
      {(isDesktop && <img src={rightCharacter} style={styles.rightCharacter} />)}
       <footer style={styles.footer}>
-         <div style={styles.shareImageWrap}> 
-          <img src={shareSection} alt="Share section" style={styles.shareImage}/>
-        </div>
+         {isDesktop && (
+           <div style={styles.shareImageWrap}> 
+            <img src={shareSection} alt="Share section" style={styles.shareImage}/>
+          </div>
+         )}
            <h2 style={styles.footerH2}>What are you waiting for?<br />Join now, it's free!</h2>
         <p style={styles.footerP}>
           Animeverse is the ultimate destination for the modern fan. Watch, react, and connect
