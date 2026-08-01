@@ -336,6 +336,14 @@ streamImg:{
     gap: isDesktop ? "40px": "20px",
   },
 
+  featuresColumn: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "24px",
+    width: "100%",
+  },
+
 
   featureGrid: {
     display: "flex",
@@ -694,15 +702,33 @@ rightCharacter: {
 
 </section>
 
-  {/* Mobile-only: place stat badge and hero collage before marquee */}
+  {/* Mobile-only: hero collage first, then stat badge below it, per mobile design */}
   {!isDesktop && (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginTop: -40, }}>
-      <div style={{...styles.statBanner, position: 'relative', zIndex: 20}}>
-        <img src={statBadge} alt="12M+ Users" style={{...styles.statImg, position: 'relative', top: 1000, left: 0, }}/>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginTop: '20px', width: '100%'}}>
+      <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+        <img
+          src={heroCollageMobile}
+          alt="Anime collage"
+          style={{
+            width: '90%',
+            maxWidth: '360px',
+            height: 'auto',
+            borderRadius: '6px',
+            display: 'block',
+            objectFit: 'cover',
+          }}
+        />
       </div>
-      <div style={{width: '100%', display: 'flex', justifyContent: 'center', position: 'relative'}}>
-        <div style={{...styles.collageFadeMobile,}} />
-        <img src={heroCollageMobile} alt="Anime collage" style={{...styles.heroCollageImg, position: 'relative', top: 1000, left: 0, width: '90%', height: 'auto',}} />
+      <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+        <img
+          src={statBadge}
+          alt="12M+ Users"
+          style={{
+            width: '125px',
+            height: 'auto',
+            display: 'block',
+          }}
+        />
       </div>
     </div>
   )}
@@ -731,20 +757,41 @@ rightCharacter: {
            {/* Your cards can now be wrapped in a flex container */}
   <div style={isDesktop ? styles.featuresRow : styles.featuresColumn}>
 
-  {/* CARD 1 */}
-  <div style={styles.featureCardImage}>
-     <img src={recommendedImage} style={styles.featureCardImg} />
-  </div>
+  {isDesktop ? (
+    <>
+      {/* CARD 1 - Recommended */}
+      <div style={styles.featureCardImage}>
+         <img src={recommendedImage} style={styles.featureCardImg} />
+      </div>
 
-  {/* CARD 2 */}
-  <div style={styles.featureCardImage}>
-   <img src={mostWatchedImage} style={styles.featureCardImg} />
-  </div>
+      {/* CARD 2 - Most Watched */}
+      <div style={styles.featureCardImage}>
+       <img src={mostWatchedImage} style={styles.featureCardImg} />
+      </div>
 
-  {/* CARD 3 */}
-  <div style={styles.featureCardImage}>
-    <img src={wishlistImage} style={styles.featureCardImg} />
-  </div>
+      {/* CARD 3 - Wishlist */}
+      <div style={styles.featureCardImage}>
+        <img src={wishlistImage} style={styles.featureCardImg} />
+      </div>
+    </>
+  ) : (
+    <>
+      {/* CARD 1 - Most Watched (mobile order) */}
+      <div style={styles.featureCardImage}>
+       <img src={mostWatchedImage} style={styles.featureCardImg} />
+      </div>
+
+      {/* CARD 2 - Recommended (mobile order) */}
+      <div style={styles.featureCardImage}>
+         <img src={recommendedImage} style={styles.featureCardImg} />
+      </div>
+
+      {/* CARD 3 - Wishlist */}
+      <div style={styles.featureCardImage}>
+        <img src={wishlistImage} style={styles.featureCardImg} />
+      </div>
+    </>
+  )}
 
 </div>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
