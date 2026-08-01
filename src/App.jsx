@@ -76,15 +76,13 @@ const styles = {
   app: {
     width: "100%",
     minHeight: "100vh",
-    backgroundColor: "black", 
-    backgroundImage: `url(${isDesktop ? lightDesktop:lightMobile})`,
+    backgroundColor: "black",
+    backgroundImage: isDesktop ? `url(${lightDesktop})` : `url(${lightMobile})`,
     backgroundPosition: "top center",
     backgroundRepeat: "no-repeat",
-    // 3. Keep it at the top so it doesn't stretch to the bottom
-    backgroundSize:"1600px", 
+    backgroundSize: isDesktop ? "1600px auto" : "120% auto",
     position: "relative",
     overflowX: "hidden",
-
   },
   // Floating Characters (Desktop Only)
   floatingCharLeft: {
@@ -214,10 +212,13 @@ heroWrapper: {
   heroLeftMobile: {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",   // center everything
+  alignItems: "center",
   textAlign: "center",
-  padding: "0 16px",      // side spacing
-  gap: "16px",            // consistent spacing
+  padding: "0 16px",
+  gap: "12px",
+  position: "relative",
+  zIndex: 3,
+  marginTop: "-8px",
 },
 
   h1: {
@@ -229,21 +230,7 @@ heroWrapper: {
     letterSpacing: -3,
     colour:"#FFFFFF",
   },
-  heroP: {
-    fontSize: isDesktop ? "18px":"12px",
-    fontWeight:700,
-    color: "#FFFFFFCC",
-    lineHeight: "100%",
-    fontFamily:"Plus Jakarta Sans",
-    letterSpacing:"2%",
-    marginBottom: "30px",
-    maxWidth: isDesktop ? "none" : "300px",
-    margin: "-15px auto 28px", 
-    width:"700px",
-    display:"inline-block"
-    
-    
-  },
+
 heroRight: {
   position: "relative",
   width: "50%",
@@ -255,16 +242,17 @@ heroRight: {
 collageFade: {
   position: "absolute",
   inset:0,
-
   pointerEvents: "none",
   background: `
     linear-gradient(
       to bottom,
-      rgba(0,0,0,0.9) 0%,
-      rgba(0,0,0,0.4) 10%,
-      rgba(0,0,0,0) 25%,
-      rgba(0,0,0,0.4) 75%
-      rgba(0,0,0,0.9) 100%
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.8) 18%,
+      rgba(0,0,0,0.35) 32%,
+      rgba(0,0,0,0) 46%,
+      rgba(0,0,0,0) 66%,
+      rgba(0,0,0,0.45) 86%,
+      rgba(0,0,0,1) 100%
     )
   `,
   zIndex: 2,
@@ -276,25 +264,30 @@ collageFadeMobile: {
   background: `linear-gradient(
     to bottom,
     rgba(0,0,0,1) 0%,
-    rgba(0,0,0,0) 25%,
-    rgba(0,0,0,0) 75%,
+    rgba(0,0,0,0.8) 18%,
+    rgba(0,0,0,0.35) 32%,
+    rgba(0,0,0,0) 46%,
+    rgba(0,0,0,0) 66%,
+    rgba(0,0,0,0.45) 86%,
     rgba(0,0,0,1) 100%
   )`,
+  zIndex: 2,
 },
 
 heroCollageImg: {
-  width: isDesktop ? "120%" : "450px",
-  height: isDesktop ? "auto" : "450px",
-  maxWidth: isDesktop ? "800px" : "none",
+  width: isDesktop ? "120%" : "90%",
+  height: isDesktop ? "auto" : "auto",
+  maxWidth: isDesktop ? "800px" : "360px",
   objectFit: "cover",
   animation: "fadeUp 1s ease-out",
-  position: isDesktop ? "relative" : "absolute",
-  top: isDesktop ? "auto" : "180px",
-  left: isDesktop ? "auto" : "-101.11px",
+  position: "relative",
+  top: 0,
+  left: 0,
   zIndex: 1,
-  transform: isDesktop ? "translateX(120px)" : "rotate(0deg)",
+  transform: isDesktop ? "translateX(120px)" : "none",
   opacity: 1,
   borderRadius: isDesktop ? "0px" : "6px",
+  display: "block",
 },
   // --- MARQUEE ---
 
@@ -519,25 +512,47 @@ height: isDesktop ? "520px" : "340px",
   marginBottom:"70px"
  },
  badgeimg:{
-  height:isDesktop ? "66px": "67px",
-  width:"306px",
+  height:isDesktop ? "66px": "40px",
+  width:isDesktop ? "306px":"174px",
   display:"block",
-  marginBottom:"10px",
+  marginBottom:"20px",
+  marginTop: isDesktop ? "none":"30px"
  },
  h2:{
   fontFamily:"poppins",
-  fontWeight:500,
+  fontWeight: 500,
   fontSize:isDesktop ? "56px" : "30px",
   color:"#FFFFFF",
-  letterSpacing: "0.5px",
-  marginTop: "20px",
+  letterSpacing: "-3%",
+  marginTop: "25px",
   marginBottom:"20px",
-  maxWidth:isDesktop ? "none" : "100%",
+  maxWidth:isDesktop ? "none" : "none",
   lineHeight: 1,
   whiteSpace: "nowrap"
  },
 
-  ctaGroup: { display: "flex", flexDirection: isDesktop ? "row" : "row", gap: "10px" },
+  heroP: {
+    fontSize: isDesktop ? "18px":"12px",
+    fontWeight:700,
+    color: "#FFFFFFCC",
+    lineHeight: "100%",
+    fontFamily:"Plus Jakarta Sans",
+    letterSpacing:"-3%",
+    marginBottom: isDesktop ? "30px" : "10px",
+    maxWidth: isDesktop ? "none" : "306px",
+    margin: isDesktop ? "-15px auto 28px" : "-20px auto 12px",
+    width: isDesktop ? "700px" : "100%",
+    display:"inline-block"
+  },
+
+  ctaGroup: { 
+    display: "flex", 
+    flexDirection: isDesktop ? "row" : "row",
+    gap: "10px", 
+    marginTop: isDesktop ? "0px" : "-4px", 
+    position: isDesktop ? "relative" : "relative", 
+    zIndex: 4 },
+
   btnPrimary: {
     background: "#f0ede8", color: "#0a0a0c", padding: "15px 30px",
     borderRadius: "30px", fontWeight: 700, border: "none", cursor: "pointer",  boxShadow:"inset 0 0 8px rgba(247, 247, 247, 0.2)",
@@ -704,29 +719,34 @@ rightCharacter: {
 
   {/* Mobile-only: hero collage first, then stat badge below it, per mobile design */}
   {!isDesktop && (
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', marginTop: '20px', width: '100%'}}>
-      <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginTop: "8px", width: "100%", position: "relative" }}>
+      <div style={{ position: "relative", width: "calc(100% + 40px)", marginLeft: "-20px", marginRight: "-20px", display: "flex", justifyContent: "center", marginTop: "-8px" }}>
+        <div style={{ ...styles.collageFadeMobile, inset: "0 0 0 0", width: "100%", height: "100%" }} />
         <img
           src={heroCollageMobile}
           alt="Anime collage"
           style={{
-            width: '90%',
-            maxWidth: '360px',
-            height: 'auto',
-            borderRadius: '6px',
-            display: 'block',
-            objectFit: 'cover',
+            ...styles.heroCollageImg,
+            width: "100%",
+            maxWidth: "100%",
+            height: "auto",
+            borderRadius: "6px",
+            marginTop: "-12px",
+            position: "relative",
+            zIndex: 1,
           }}
         />
       </div>
-      <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%", marginTop: "-18px", marginBottom: "8px", position: "relative", zIndex: 5 }}>
         <img
           src={statBadge}
           alt="12M+ Users"
           style={{
-            width: '125px',
-            height: 'auto',
-            display: 'block',
+            width: "125px",
+            height: "auto",
+            display: "block",
+            marginTop: "4px",
+            marginBottom: "4px",
           }}
         />
       </div>
